@@ -1,7 +1,13 @@
+# libs
+libft.a
+libft.so
+*.o
+*.gch
 # executable
-expertsystem
-expert_system
+ft_ssl
+ft_md5
 # system files
 .DS_Store
+*.dSYM
 
 bin/*
