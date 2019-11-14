@@ -68,22 +68,23 @@ int ft_ssl_process(int ac, char **av)
 	unsigned char	*input;
 	long int		size;
 
-	i = 1;
+	i = 2;
 	opts = NULL;
-	fd = 1;
 	while (i < ac)
 	{
 		if (!(opts = ssl_read_opts(ac - i, av[i])))
 			return (1);
-		if ((int)opts != 0) // if options, skipe options arg
+		if ((int)opts != 0) // if options, skip options arg
 			i++;
-		if (i == ac)
+		if ((i == 2 && (int)opts == 0) || (i == 3 && !opts->s) && i == ac - 1)
 			fd = 1;
-		else if ((fd = open(av[i], O_RDONLY)) < 0)
+		else if ((fd = open(av[i], O_RDONLY)) < 0 && i++)
 			return (ft_free_ret(opts, 1));
+		input = NULL;
 		if ((size = ft_get_fd_content(&input, fd)) < 0)
 			return (ft_free_ret(opts, 1));
 		ssl_opts_print(apply_hash(input, size, g_funcs[opts->h]), opts);
+		free(opts);
 	}
 	return (0);
 }

@@ -23,7 +23,7 @@ long int	ft_get_fd_content(unsigned char **res, int fd)
 	total_size = 0;
 	while ((read_status = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		if (!(*res = ft_realloc2(res, total_size, total_size + read_status)))
+		if (!(*res = ft_realloc2(*res, total_size, total_size + read_status)))
 			return (-1);
 		ft_memcpy(*res + total_size, buff, read_status);
 		total_size += read_status;

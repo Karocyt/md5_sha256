@@ -16,5 +16,6 @@
 char *ft_md5(unsigned char *input, size_t size)
 {
 	(void)size;
-	return ((char *)ft_strdup((char *)input));
+	(void)input;
+	return (ft_strdup("OK"));
 }

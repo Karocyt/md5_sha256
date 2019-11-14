@@ -15,7 +15,7 @@
 
 int main(int ac, char **av)
 {
-	if (!ft_ssl_process(ac, av))
+	if (ac > 1 && !ft_strcmp(av[1], "md5") && !ft_ssl_process(ac, av))
 		return (0);
 	ft_putstr(USAGE);
 	return (1);
