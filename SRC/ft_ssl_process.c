@@ -26,15 +26,17 @@ static t_params *ssl_read_opts(int ac, char *str)
 	int 	index;
 	t_uopts	*opts;
 
+	printf("read_opts\n");
 	i = 0;
 	y = 0;
 	if (!(opts = ft_memalloc(sizeof(t_uopts))))
 		return (NULL);
 	opts->opts.h = MD5;
-	while (str[0] == '-' && str[1] && str[++i])
+	while (str && str[0] == '-' && str[1] && str[++i])
 	{
+		printf("\t reading...\n");
 		index = str[i] - 'a' - 16;
-		if ((index == 3 && ac > 0) || (index != 3 && index >= 0 && index < 4 && !opts->str[index]))
+		if ((index == 3 && ac > 1) || (index != 3 && index >= 0 && index < 4 && !opts->str[index]))
 			opts->str[index]++;
 		else // if is not a flag, or already set, or string without other arg
 			return ((t_params *)ft_free_ret(opts, 0));
@@ -54,6 +56,7 @@ static char *apply_hash(unsigned char *input, size_t size, char *(*f)(unsigned c
 {
 	char *res;
 
+	printf("Apply_hash\n");
 	res = f(input, size);
 	free(input);
 	return (res);
@@ -68,18 +71,23 @@ int ft_ssl_process(int ac, char **av)
 	unsigned char	*input;
 	long int		size;
 
-	i = 2;
+	i = 1;
 	opts = NULL;
-	while (i < ac)
+	while (++i <= ac)
 	{
+		printf("Process loop (i=%i): %s\n", i, av[i]);
 		if (!(opts = ssl_read_opts(ac - i, av[i])))
 			return (1);
 		if ((int)opts != 0) // if options, skip options arg
 			i++;
-		if (((i == 2 && (int)opts == 0) || (i == 3 && !opts->s)) && i == ac - 1)
+		printf("\t stdin (i:%i, ac:%i, opts->s:%i -> char: %i)\n", i, ac, opts->s, (int)opts);
+		if (i == ac && !opts->s)
 			fd = 1;
-		else if ((fd = open(av[i], O_RDONLY)) < 0 && i++)
+		else if ((fd = open(av[i], O_RDONLY)) < 0)
+		{
+			printf("\t stdout\n");
 			return (ft_free_ret(opts, 1));
+		}
 		input = NULL;
 		if ((size = ft_get_fd_content(&input, fd)) < 0)
 			return (ft_free_ret(opts, 1));

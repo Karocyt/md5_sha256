@@ -23,17 +23,17 @@ typedef enum e_hash_functions {
 }				t_hash;
 
 typedef struct s_ssl {
-	uint8_t	p:1;
-	uint8_t	q:1;
-	uint8_t	r:1;
-	uint8_t	s:1;
-	t_hash	h;
-	void	(*f)(char *);
+	uint8_t		p;
+	uint8_t		q;
+	uint8_t		r;
+	uint8_t		s;
+	t_hash		h;
+	void		(*f)(char *);
 }				t_params;
 
 typedef union u_ssl {
 	t_params	opts;
-	char	str[4];
+	char		str[4];
 }				t_uopts;
 
 void *g_funcs[1];
