@@ -35,7 +35,7 @@ static t_params *ssl_read_opts(int ac, char *str)
 	while (str && str[0] == '-' && str[1] && str[++i])
 	{
 		printf("\t reading...\n");
-		index = str[i] - 'a' - 16;
+		index = str[i] - 'p';
 		if ((index == 3 && ac > 1) || (index != 3 && index >= 0 && index < 4 && !opts->str[index]))
 			opts->str[index]++;
 		else // if is not a flag, or already set, or string without other arg
@@ -70,18 +70,20 @@ int ft_ssl_process(int ac, char **av)
 	int 			fd;
 	unsigned char	*input;
 	long int		size;
+	int				count;
 
 	i = 1;
+	count = 0;
 	opts = NULL;
-	while (++i <= ac)
+	while (++i < ac || (i == ac && !count))
 	{
 		printf("Process loop (i=%i): %s\n", i, av[i]);
 		if (!(opts = ssl_read_opts(ac - i, av[i])))
 			return (1);
-		if ((int)opts != 0) // if options, skip options arg
+		if (*(int *)opts != 0) // if options, skip options arg
 			i++;
-		printf("\t stdin (i:%i, ac:%i, opts->s:%i -> char: %i)\n", i, ac, opts->s, (int)opts);
-		if (i == ac && !opts->s)
+		printf("\t stdin (i:%i, ac:%i, opts->s:%i -> char: %i)\n", i, ac, opts->s, *(int *)opts);
+		if (!count && i == ac && !opts->s)
 			fd = 1;
 		else if ((fd = open(av[i], O_RDONLY)) < 0)
 		{
@@ -91,6 +93,7 @@ int ft_ssl_process(int ac, char **av)
 		input = NULL;
 		if ((size = ft_get_fd_content(&input, fd)) < 0)
 			return (ft_free_ret(opts, 1));
+		count++;
 		ssl_opts_print(apply_hash(input, size, g_funcs[opts->h]), opts);
 		free(opts);
 	}
