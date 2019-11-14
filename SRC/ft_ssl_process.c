@@ -79,13 +79,12 @@ int ft_ssl_process(int ac, char **av)
 		if (!(opts = ssl_read_opts(ac - i, av[i])))
 			return (1);
 		i += (*(int *)opts != 0); // move i if there was opts
-		if (!count && i == ac && !opts->s) // if first pass and no more args and not string, then stdin
+		if (!count++ && i == ac && !opts->s) // if first pass and no more args and not string, then stdin
 			opts->fd = 1;
 		else if ((opts->fd = open(av[i], O_RDONLY)) < 0) // else stdout
 			return (ft_free_ret(opts, 1));
 		if ((size = ft_get_fd_content(&input, opts->fd)) < 0)
 			return (ft_free_ret(opts, 1));
-		count++;
 		ssl_opts_print(apply_hash(input, size, g_funcs[opts->h]), opts);
 	}
 	return (0);
