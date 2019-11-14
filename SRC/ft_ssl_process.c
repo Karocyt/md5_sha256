@@ -76,7 +76,7 @@ int ft_ssl_process(int ac, char **av)
 			return (1);
 		if ((int)opts != 0) // if options, skip options arg
 			i++;
-		if ((i == 2 && (int)opts == 0) || (i == 3 && !opts->s) && i == ac - 1)
+		if (((i == 2 && (int)opts == 0) || (i == 3 && !opts->s)) && i == ac - 1)
 			fd = 1;
 		else if ((fd = open(av[i], O_RDONLY)) < 0 && i++)
 			return (ft_free_ret(opts, 1));
