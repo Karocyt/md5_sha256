@@ -21,6 +21,7 @@ long int	ft_get_fd_content(unsigned char **res, int fd)
 	unsigned char	buff[BUFF_SIZE];
 
 	total_size = 0;
+	*res = NULL;
 	while ((read_status = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		if (!(*res = ft_realloc2(*res, total_size, total_size + read_status)))

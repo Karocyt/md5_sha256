@@ -49,6 +49,7 @@ static void ssl_opts_print(char *output, t_params *opts)
 	(void)opts;
 	ft_putstr(output);
 	free(output);
+	free(opts);
 }
 
 
@@ -67,35 +68,25 @@ int ft_ssl_process(int ac, char **av)
 {
 	t_params		*opts;
 	int				i;
-	int 			fd;
 	unsigned char	*input;
 	long int		size;
 	int				count;
 
 	i = 1;
 	count = 0;
-	opts = NULL;
 	while (++i < ac || (i == ac && !count))
 	{
-		printf("Process loop (i=%i): %s\n", i, av[i]);
 		if (!(opts = ssl_read_opts(ac - i, av[i])))
 			return (1);
-		if (*(int *)opts != 0) // if options, skip options arg
-			i++;
-		printf("\t stdin (i:%i, ac:%i, opts->s:%i -> char: %i)\n", i, ac, opts->s, *(int *)opts);
-		if (!count && i == ac && !opts->s)
-			fd = 1;
-		else if ((fd = open(av[i], O_RDONLY)) < 0)
-		{
-			printf("\t stdout\n");
+		i += (*(int *)opts != 0); // move i if there was opts
+		if (!count && i == ac && !opts->s) // if first pass and no more args and not string, then stdin
+			opts->fd = 1;
+		else if ((opts->fd = open(av[i], O_RDONLY)) < 0) // else stdout
 			return (ft_free_ret(opts, 1));
-		}
-		input = NULL;
-		if ((size = ft_get_fd_content(&input, fd)) < 0)
+		if ((size = ft_get_fd_content(&input, opts->fd)) < 0)
 			return (ft_free_ret(opts, 1));
 		count++;
 		ssl_opts_print(apply_hash(input, size, g_funcs[opts->h]), opts);
-		free(opts);
 	}
 	return (0);
 }

@@ -28,6 +28,7 @@ typedef struct s_ssl {
 	uint8_t		r;
 	uint8_t		s;
 	t_hash		h;
+	int			fd;
 	void		(*f)(char *);
 }				t_params;
 
