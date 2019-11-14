@@ -13,7 +13,7 @@
 
 #ifndef FT_SSL_H
 # define FT_SSL_H
-# define USAGE "usage: ft_ssl [-pqr] [-s string] [file ...]\n"
+# define USAGE "usage: ft_ssl command [-pqr] [-s string] [file ...]\n"
 # include "libft.h"
 
 // (à partir du premier fichier ne prend que des fichiers)

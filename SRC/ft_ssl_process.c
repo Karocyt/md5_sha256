@@ -44,6 +44,7 @@ static t_params *ssl_read_opts(int ac, char *str)
 
 static void ssl_opts_print(char *output, t_params *opts)
 {
+	(void)opts;
 	ft_putstr(output);
 	free(output);
 }

@@ -178,18 +178,18 @@ PROJECT = libft
 SNAME = libft.so
 SYS = $(shell uname -s)
 
-#ifeq ($(SYS), Linux)
-CPPFLAGS += -fPIC -g
-LIB_BUILD_FLAGS += -shared -o
-SNAME = $(addsuffix .a, $(PROJECT))
-NAME = $(addsuffix .so, $(PROJECT))
-LIB_BUILDER = $(CC)
-#else
-#	LIB_BUILD_FLAGS += rcs
-#	NAME = $(addsuffix .a, $(PROJECT))
-#	SNAME = $(addsuffix .so, $(PROJECT))
-#	LIB_BUILDER = ar
-#endif
+ifeq ($(SYS), Linux)
+	CPPFLAGS += -fPIC -g
+	LIB_BUILD_FLAGS += -shared -o
+	SNAME = $(addsuffix .a, $(PROJECT))
+	NAME = $(addsuffix .so, $(PROJECT))
+	LIB_BUILDER = $(CC)
+else
+	LIB_BUILD_FLAGS += rcs
+	NAME = $(addsuffix .a, $(PROJECT))
+	SNAME = $(addsuffix .so, $(PROJECT))
+	LIB_BUILDER = ar
+endif
 
 # **************************************************************************** #
 #                                  RULES                                       #
@@ -230,14 +230,3 @@ signature:
 	@echo "   ███████╗██║██████╔╝██║        ██║"
 	@echo "   ╚══════╝╚═╝╚═════╝ ╚═╝        ╚═╝"
 	@echo ""
-
-test: all
-	cat tests/ft_malloc_test.c | sed s/ft_malloc/malloc/g | sed s/ft_free/free/g > tests/ref.c
-	clang -g tests/ft_malloc_test.c -I./includes/ -L. -lft
-	clang -g -o ref tests/ref.c -I./includes/ -L. -lft
-	valgrind --leak-check=full --show-leak-kinds=all ./a.out
-	# see man time
-	@echo "Ref:"
-	tests/run.sh time -l ./ref
-	@echo "\nKevazoul:"
-	test/run.sh time -l ./a.out
