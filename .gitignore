@@ -1,0 +1,7 @@
+# executable
+expertsystem
+expert_system
+# system files
+.DS_Store
+
+bin/*

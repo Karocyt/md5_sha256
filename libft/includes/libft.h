@@ -101,6 +101,7 @@ int				gnl_append_read(char **stack, int fd);
 ** MEMORY
 */
 
+long int		ft_free_ret(void *p, int r);
 void			*ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *s1, const void *s2, size_t n);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
@@ -250,7 +251,8 @@ long long		ft_watoi(wchar_t *str);
 ** I/O
 */
 
-char			**ft_get_file(char *filename);
+char			**ft_get_txtfile(char *filename);
+long int		ft_get_fd_content(unsigned char **res, int fd);
 void			ft_putchar(unsigned int c);
 void			ft_putstr(char *str);
 void			ft_putnbr(int nb);

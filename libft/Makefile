@@ -25,13 +25,15 @@ SRC_NAME =	ft_abs.c \
 		ft_absdiff.c \
 		ft_append_char.c \
 		ft_atof.c \
+		ft_get_txtfile.c \
 		ft_atoi.c \
 		ft_bzero.c \
 		ft_error.c \
 		ft_fact.c \
 		ft_free_grid.c \
+		ft_free_ret.c \
 		ft_free_strs.c \
-		ft_get_file.c \
+		ft_get_fd_content.c \
 		ft_getchar_pos.c \
 		ft_indexof.c \
 		ft_isalldigit.c \
