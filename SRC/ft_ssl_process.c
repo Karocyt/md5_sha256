@@ -41,6 +41,7 @@ static t_params *ssl_read_opts(int ac, char *str)
 		else // if is not a flag, or already set, or string without other arg
 			return ((t_params *)ft_free_ret(opts, 0));
 	}
+	printf("\t readopts success!\n");
 	return ((t_params *)opts);
 }
 
