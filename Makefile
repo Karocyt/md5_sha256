@@ -13,7 +13,6 @@
 
 .PHONY: all clean fclean re so signature
 
-TEST_DIR = $(HOME)/Malloc_tests
 TIME = /usr/bin/time -l # time -v on Ubuntu, time -l on OSX
 
 ifeq ($(HOSTTYPE),)
@@ -28,8 +27,10 @@ OBJDIR = OBJ/
 LFTDIR = libft
 LFT = libft.a
 INCLUDES = -I$(LFTDIR)/includes -Iincludes
-SRC_NAME =	ft_md5.c \
-			ft_ssl_process.c \
+SRC_NAME =	md5.c \
+			ssl_process.c \
+			ssl_params.c \
+			items_list_management.c \
 			main.c
 
 C_FILES = $(addprefix $(SRCDIR), $(SRC_NAME))
@@ -87,4 +88,47 @@ signature:
 	@echo ""
 
 norminette:
-	@norminette includes SRC
+	@norminette includes SRC libft/SRC libft/includes
+
+test: md5_1_file md5_2_files md5_stdin_pipe md5_str md5_str_file
+
+md5_1_file: all
+	@echo -n "md5 1 file:\n\t"
+	@openssl md5 ./Makefile
+	@echo -n "\t"
+	@./ft_ssl md5 ./Makefile
+	@echo
+
+md5_2_files: all
+	@echo -n "2 files:\n\t"
+	@openssl md5 ./Makefile ./ft_ssl
+	@echo -n "\t"
+	@./ft_ssl md5 ./Makefile ./ft_ssl
+	@echo
+
+md5_stdin_pipe:
+	@echo -n "stdin pipe:\n\t"
+	@echo -n hello | openssl md5
+	@echo -n "\t"
+	@echo -n hello | ./ft_ssl md5
+	@echo
+
+md5_str:
+	@echo -n "\nstring as parameter:\n\t"
+	@echo -n hello | openssl md5
+	@echo -n "\t"
+	@./ft_ssl md5 -s hello
+	@echo
+
+md5_str_file:
+	@echo -n "\nstring and file:\n\t"
+	@echo -n hello | openssl md5
+	@echo -n "\t"
+	@openssl md5 ./Makefile
+	@echo -n "\t"
+	@./ft_ssl -s hello ./Makefile
+	@echo
+
+test_empty:
+	@echo -n "\nusage:\n\t"
+	@./ft_ssl md5

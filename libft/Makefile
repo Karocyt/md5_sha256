@@ -178,18 +178,18 @@ PROJECT = libft
 SNAME = libft.so
 SYS = $(shell uname -s)
 
-ifeq ($(SYS), Linux)
-	CPPFLAGS += -fPIC -g
-	LIB_BUILD_FLAGS += -shared -o
-	SNAME = $(addsuffix .a, $(PROJECT))
-	NAME = $(addsuffix .so, $(PROJECT))
-	LIB_BUILDER = $(CC)
-else
+#ifeq ($(SYS), Linux)
+#	CPPFLAGS += -fPIC -g
+#	LIB_BUILD_FLAGS += -shared -o
+#	SNAME = $(addsuffix .a, $(PROJECT))
+#	NAME = $(addsuffix .so, $(PROJECT))
+#	LIB_BUILDER = $(CC)
+#else
 	LIB_BUILD_FLAGS += rcs
 	NAME = $(addsuffix .a, $(PROJECT))
 	SNAME = $(addsuffix .so, $(PROJECT))
 	LIB_BUILDER = ar
-endif
+#endif
 
 # **************************************************************************** #
 #                                  RULES                                       #

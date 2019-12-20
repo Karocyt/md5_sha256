@@ -15,8 +15,12 @@
 
 int main(int ac, char **av)
 {
-	if (ac > 2 && !ft_strcmp(av[1], "md5") && !ft_ssl_process(ac, av))
-		return (0);
-	ft_putstr(USAGE);
+    t_params *params;
+
+    if (ac > 2 && (params = ft_memalloc(sizeof(t_params))) &&
+        !ssl_read_params(ac, av, params) && !ssl_process(params))
+	   	return (0);
+	//left to clean
+    ft_putstr(USAGE);
 	return (1);
 }

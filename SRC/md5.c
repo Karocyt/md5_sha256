@@ -31,7 +31,7 @@
 // 	return (new_size);
 // }
 
-char *ft_md5(unsigned char *input, size_t size)
+char *ssl_md5(unsigned char *input, size_t size)
 {
 	return (ft_strdup("OK\n\n"));
 	(void)size;
