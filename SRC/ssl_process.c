@@ -12,19 +12,17 @@
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-#include <fcntl.h>
 
 void *g_funcs[1] =
 {
 	&ssl_md5
 };
 
-static void ssl_opts_print(char *output, t_params *opts)
+static void ssl_opts_print(char *output, t_params *params)
 {
-	(void)opts;
-	ft_putstr(output);
+	ft_putendl(output);
 	free(output);
-	free(opts);
+	free(params);
 }
 
 
@@ -32,7 +30,7 @@ static char *apply_hash(t_item *item, char *(*f)(unsigned char*, size_t))
 {
 	char *res;
 
-	ft_printf("Apply_hash\n");
+	//ft_printf("Apply_hash\n");
 	res = f(item->content, item->size);
 	return (res);
 }
@@ -42,6 +40,7 @@ int ssl_process(t_params *params)
 {
 	t_item 			*item;
 
+    //ft_printf("process\n");
 	item = params->items;
 	while (item)
 	{

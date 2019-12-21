@@ -18,22 +18,24 @@ static int     ssl_read_opts(char *str, t_params *params)
 {
     int i;
 
-    i = 1;
-    if (str[0] != '-')
+    i = 0;
+    if (str[i] != '-')
         return (0);
-    while (str[i])
+    //ft_printf("read_opts: %s\n", str);
+    while (str[++i])
     {
         if (str[i] == 'p' && !params->p)
             params->p = 1;
         else if (str[i] == 'q' && !params->q)
-            params->p = 1;
+            params->q = 1;
         else if (str[i] == 'r' && !params->r)
-            params->p = 1;
+            params->r = 1;
         else if (str[i] == 's' && !params->s)
-            params->p = 1;
+            params->s = 1;
         else
             return (0);
     }
+    //ft_printf("opts: pqrs = %d%d%d%d\n", params->p, params->q, params->r, params->s);
     return (1);
 }
 
@@ -41,6 +43,7 @@ static int ssl_add_file(char *filename, t_params *params)
 {
     int             fd;
 
+    //ft_printf("add_file: %s\n", filename);
     if ((fd = open(filename, O_RDONLY)) < 0) // else stdout
         return (0);
     ssl_add_item_from_fd(&params->items, fd);
@@ -55,28 +58,33 @@ static int ssl_set_algo(char *str, t_params *params)
         params->h = SHA256;
     else
         return (0);
+    //ft_printf("set_algo: %s\n", str);
     return (1);
 }
 
-t_params *ssl_read_params(int ac, char **av, t_params *params)
+int         ssl_read_params(int ac, char **av, t_params *params)
 {
     int         i;
 
     i = 2;
     if (!ssl_set_algo(av[1], params))
-        return (0);
+        return (1);
     while (i < ac && ssl_read_opts(av[i], params))
         i++;
-    if (i == ac && params->s)
-        return (0);
-    if (i < ac && params->s && !(params->s = 0))
+    if (params->s)
+    {
+        if (i == ac)
+            return (1);
+        params->s = 0;
         ssl_add_item_from_str(&params->items, av[i++]);
-    while (i < ac && ssl_add_file(av[i], params))
-        i++;
+    }
+    while (i < ac)
+        if (!ssl_add_file(av[i++], params))
+            return (1);
     if (i != ac)
-        return (0);
+        return (1);
     if (!params->items)
-        ssl_add_item_from_fd(&params->items, 1);
-    return (params);
+        ssl_add_item_from_fd(&params->items, 0);
+    return (0);
 
 }

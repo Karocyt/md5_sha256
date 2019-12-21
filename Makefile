@@ -31,6 +31,7 @@ SRC_NAME =	md5.c \
 			ssl_process.c \
 			ssl_params.c \
 			items_list_management.c \
+			sha256.c \
 			main.c
 
 C_FILES = $(addprefix $(SRCDIR), $(SRC_NAME))
@@ -93,42 +94,36 @@ norminette:
 test: md5_1_file md5_2_files md5_stdin_pipe md5_str md5_str_file
 
 md5_1_file: all
-	@echo -n "md5 1 file:\n\t"
+	@echo -n "md5 1 file:\n"
 	@openssl md5 ./Makefile
-	@echo -n "\t"
 	@./ft_ssl md5 ./Makefile
 	@echo
 
 md5_2_files: all
-	@echo -n "2 files:\n\t"
+	@echo -n "2 files:\n"
 	@openssl md5 ./Makefile ./ft_ssl
-	@echo -n "\t"
 	@./ft_ssl md5 ./Makefile ./ft_ssl
 	@echo
 
 md5_stdin_pipe:
-	@echo -n "stdin pipe:\n\t"
+	@echo -n "stdin pipe:\n"
 	@echo -n hello | openssl md5
-	@echo -n "\t"
 	@echo -n hello | ./ft_ssl md5
 	@echo
 
 md5_str:
-	@echo -n "\nstring as parameter:\n\t"
+	@echo -n "\nstring as parameter:\n"
 	@echo -n hello | openssl md5
-	@echo -n "\t"
 	@./ft_ssl md5 -s hello
 	@echo
 
 md5_str_file:
-	@echo -n "\nstring and file:\n\t"
+	@echo -n "\nstring and file:\n"
 	@echo -n hello | openssl md5
-	@echo -n "\t"
 	@openssl md5 ./Makefile
-	@echo -n "\t"
-	@./ft_ssl -s hello ./Makefile
+	@./ft_ssl md5 -s hello ./Makefile
 	@echo
 
 test_empty:
-	@echo -n "\nusage:\n\t"
+	@echo -n "\nusage:\n"
 	@./ft_ssl md5

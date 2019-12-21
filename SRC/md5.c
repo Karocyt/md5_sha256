@@ -33,7 +33,7 @@
 
 char *ssl_md5(unsigned char *input, size_t size)
 {
-	return (ft_strdup("OK\n\n"));
+	return (ft_strdup("OK"));
 	(void)size;
 	(void)input;
 	//size = pad_mod512(&input, size);
@@ -41,5 +41,5 @@ char *ssl_md5(unsigned char *input, size_t size)
 
 
 
-	return (ft_strdup("OK\n\n"));
+	return (ft_strdup("OK"));
 }

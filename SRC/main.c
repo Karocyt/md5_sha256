@@ -17,9 +17,12 @@ int main(int ac, char **av)
 {
     t_params *params;
 
-    if (ac > 2 && (params = ft_memalloc(sizeof(t_params))) &&
+    if (ac > 1 && (params = ft_memalloc(sizeof(t_params))) &&
         !ssl_read_params(ac, av, params) && !ssl_process(params))
+    {
+        //ft_printf("Done.\n");
 	   	return (0);
+    }
 	//left to clean
     ft_putstr(USAGE);
 	return (1);

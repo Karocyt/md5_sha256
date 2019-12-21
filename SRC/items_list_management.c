@@ -30,6 +30,7 @@ int        ssl_add_item_from_str(t_item **lst, char *str)
     t_item *new;
     size_t size;
 
+    //ft_printf("add_item_from_str... ");
     size = ft_strlen(str);
     if (!(new = malloc(sizeof(t_item))))
         return (1);
@@ -37,6 +38,7 @@ int        ssl_add_item_from_str(t_item **lst, char *str)
     new->size = size;
     new->next = NULL;
     ssl_append_item(lst, new);
+    //ft_printf("OK\n");
     return (0);
 }
 
@@ -46,6 +48,7 @@ int        ssl_add_item_from_fd(t_item **lst, int fd)
     unsigned char *content;
     size_t size;
 
+    //ft_printf("add_item_from_fd...");
     if ((size = ft_get_fd_content(&content, fd)) < 0)
         return (0);
     if (!(new = malloc(sizeof(t_item))))
@@ -54,6 +57,7 @@ int        ssl_add_item_from_fd(t_item **lst, int fd)
     new->size = size;
     new->next = NULL;
     ssl_append_item(lst, new);
+    //ft_printf("OK\n");
     return (0);
 }
 
