@@ -15,10 +15,10 @@
 
 // static size_t pad_mod512(unsigned char **input, size_t size)
 // {
-// 	int 			new_size;
+// 	size_t 			new_size;
 // 	char 			*tmp;
 
-// 	new_size = (size / 512 + 1) * 512; // %512 should be 448
+// 	new_size = (size * 8 / 512 + 1) * 512; // %512 should be 448
 // 	if (new_size - 64 <= size)
 // 		new_size += 512;
 // 	if (!(tmp = ft_memalloc(new_size)))
@@ -33,7 +33,7 @@
 
 char *ssl_md5(unsigned char *input, size_t size)
 {
-	return (ft_strdup("OK"));
+	return (ft_strdup("MD5"));
 	(void)size;
 	(void)input;
 	//size = pad_mod512(&input, size);
@@ -41,5 +41,5 @@ char *ssl_md5(unsigned char *input, size_t size)
 
 
 
-	return (ft_strdup("OK"));
+	return (ft_strdup("MD5"));
 }

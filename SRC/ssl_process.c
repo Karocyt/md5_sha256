@@ -13,9 +13,10 @@
 
 #include "ft_ssl.h"
 
-void *g_funcs[1] =
+void *g_funcs[NB_ALGOS] =
 {
-	&ssl_md5
+	&ssl_md5,
+	&ssl_sha256
 };
 
 static void ssl_opts_print(char *output, t_params *params)

@@ -13,3 +13,15 @@
 
 #include "ft_ssl.h"
 
+char *ssl_sha256(unsigned char *input, size_t size)
+{
+    return (ft_strdup("SHA256"));
+    (void)size;
+    (void)input;
+    //size = pad_mod512(&input, size);
+    
+
+
+
+    return (ft_strdup("SHA256"));
+}

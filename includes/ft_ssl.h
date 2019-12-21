@@ -19,7 +19,8 @@
 // (à partir du premier fichier ne prend que des fichiers)
 
 typedef enum e_hash_functions {
-	MD5,
+	NB_ALGOS = 2,
+	MD5 = 0,
 	SHA256
 }				t_hash;
 
@@ -38,14 +39,15 @@ typedef struct s_ssl {
 	t_item			*items;
 }				t_params;
 
-void *g_funcs[1];
+void *g_funcs[NB_ALGOS];
 
 int 			ssl_process(t_params *params);
-int 		ssl_read_params(int ac, char **av, t_params *params);
+int 			ssl_read_params(int ac, char **av, t_params *params);
 char 			*ssl_md5(unsigned char *input, size_t size);
+char 			*ssl_sha256(unsigned char *input, size_t size);
 void    		ssl_clear_items(t_item **lst);
-int        ssl_add_item_from_str(t_item **lst, char *str);
-int        ssl_add_item_from_fd(t_item **lst, int fd);
+int        		ssl_add_item_from_str(t_item **lst, char *str);
+int        		ssl_add_item_from_fd(t_item **lst, int fd);
 
 
 
