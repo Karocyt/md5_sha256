@@ -13,40 +13,19 @@
 
 #include "ft_ssl.h"
 
-void *g_funcs[NB_ALGOS] =
+char *ssl_md5(unsigned char *input, size_t size)
 {
-	&ssl_md5,
-	&ssl_sha256
-};
+	//return (ft_strdup("MD5"));
+	//(void)size;
+	//(void)input;
+    t_md5_words words;
 
-static void ssl_opts_print(char *output, t_params *params)
-{
-	ft_putendl(output);
-	free(output);
-	(void)params;
-}
+    words = (t_md5_words)input;
+	if (!(size = md5_pad(&words, size)))
+        return (NULL);
+	
 
 
-static char *apply_hash(t_item *item, char *(*f)(unsigned char*, size_t))
-{
-	char *res;
 
-	//ft_printf("Apply_hash\n");
-	res = f(item->content, item->size);
-	return (res);
-}
-
-// return 0 success
-int ssl_process(t_params *params)
-{
-	t_item 			*item;
-
-    //ft_printf("process\n");
-	item = params->items;
-	while (item)
-	{
-		ssl_opts_print(apply_hash(item, g_funcs[params->h]), params);
-		item = item->next;
-	}
-	return (0);
+	return (ft_strdup("MD5"));
 }

@@ -16,6 +16,8 @@
 # define USAGE "usage: ft_ssl command [-pqr] [-s string] [file ...]\n"
 # include "libft.h"
 
+# define LEADING_ONE (unsigned char)1 << 7
+
 // (à partir du premier fichier ne prend que des fichiers)
 
 typedef enum e_hash_functions {
@@ -39,6 +41,12 @@ typedef struct s_ssl {
 	t_item			*items;
 }				t_params;
 
+typedef union u_md5_words {
+	uint64_t		*uint64;
+	uint32_t		*uint32;
+	unsigned char	*uchar;
+}				t_md5_words;
+
 void *g_funcs[NB_ALGOS];
 
 int 			ssl_process(t_params *params);
@@ -48,6 +56,7 @@ char 			*ssl_sha256(unsigned char *input, size_t size);
 void    		ssl_clear_items(t_item **lst);
 int        		ssl_add_item_from_str(t_item **lst, char *str);
 int        		ssl_add_item_from_fd(t_item **lst, int fd);
+size_t 			md5_pad(t_md5_words *words, size_t size);
 
 
 

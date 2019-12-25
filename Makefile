@@ -27,11 +27,13 @@ OBJDIR = OBJ/
 LFTDIR = libft
 LFT = libft.a
 INCLUDES = -I$(LFTDIR)/includes -Iincludes
-SRC_NAME =	md5.c \
+SRC_NAME =	md5_main.c \
+			md5_padding.c \
 			ssl_process.c \
 			ssl_params.c \
 			items_list_management.c \
-			sha256.c \
+			sha256_main.c \
+			utils.c \
 			main.c
 
 C_FILES = $(addprefix $(SRCDIR), $(SRC_NAME))
@@ -91,7 +93,11 @@ signature:
 norminette:
 	@norminette includes SRC libft/SRC libft/includes
 
-test: md5_1_file md5_2_files md5_stdin_pipe md5_str md5_str_file
+test_md5: md5_1_file md5_2_files md5_stdin_pipe md5_str md5_str_file
+
+test_sha256: sha256_1_file sha256_2_files sha256_stdin_pipe sha256_str sha256_str_file
+
+test: test_md5 test_sha256
 
 md5_1_file: all
 	@echo -n "md5 1 file:\n"
@@ -122,6 +128,37 @@ md5_str_file:
 	@echo -n hello | openssl md5
 	@openssl md5 ./Makefile
 	@./ft_ssl md5 -s hello ./Makefile
+	@echo
+
+sha256_1_file: all
+	@echo -n "md5 1 file:\n"
+	@openssl sha256 ./Makefile
+	@./ft_ssl sha256 ./Makefile
+	@echo
+
+sha256_2_files: all
+	@echo -n "2 files:\n"
+	@openssl sha256 ./Makefile ./ft_ssl
+	@./ft_ssl sha256 ./Makefile ./ft_ssl
+	@echo
+
+sha256_stdin_pipe:
+	@echo -n "stdin pipe:\n"
+	@echo -n hello | openssl sha256
+	@echo -n hello | ./ft_ssl sha256
+	@echo
+
+sha256_str:
+	@echo -n "\nstring as parameter:\n"
+	@echo -n hello | openssl sha256
+	@./ft_ssl sha256 -s hello
+	@echo
+
+sha256_str_file:
+	@echo -n "\nstring and file:\n"
+	@echo -n hello | openssl sha256
+	@openssl sha256 ./Makefile
+	@./ft_ssl sha256 -s hello ./Makefile
 	@echo
 
 test_empty:
