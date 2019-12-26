@@ -69,6 +69,7 @@ uint32_t    	F(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	G(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	H(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	I(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	leftrotate(uint32_t x, uint32_t c);
 
 
 

@@ -40,3 +40,8 @@ uint32_t    I(uint32_t B, uint32_t C, uint32_t D)
 {
     return (C ^ (B | ~D));
 }
+
+uint32_t    leftrotate(uint32_t x, uint32_t c)
+{
+    return ((x << c) | (x >> (sizeof(uint32_t)-c)));
+}
