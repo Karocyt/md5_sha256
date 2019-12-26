@@ -47,10 +47,12 @@ int        ssl_add_item_from_fd(t_item **lst, int fd)
     t_item *new;
     unsigned char *content;
     size_t size;
+    int64_t tmp;
 
     //ft_printf("add_item_from_fd...");
-    if ((size = ft_get_fd_content(&content, fd)) < 0)
+    if ((tmp = (uint64_t)ft_get_fd_content(&content, fd)) < 0)
         return (0);
+    size = (size_t)tmp;
     if (!(new = malloc(sizeof(t_item))))
         return (1);
     new->content = content;
