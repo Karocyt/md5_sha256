@@ -63,8 +63,12 @@ char 			*ssl_sha256(unsigned char *input, size_t size);
 void    		ssl_clear_items(t_item **lst);
 int    			ssl_add_item_from_str(t_item **lst, char *str);
 int        		ssl_add_item_from_fd(t_item **lst, int fd);
-size_t 			md5_pad(t_md5_words **words, size_t size);
 
+size_t 			md5_pad(t_md5_words **words, size_t size);
+uint32_t    	F(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	G(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	H(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	I(uint32_t B, uint32_t C, uint32_t D);
 
 
 
