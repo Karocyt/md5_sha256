@@ -13,6 +13,11 @@
 
 #include "ft_ssl.h"
 
+/*
+    https://en.wikipedia.org/wiki/MD5
+    http://practicalcryptography.com/hashes/md5-hash/
+*/
+
 const uint32_t  g_add[64] = {0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
                             0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
                             0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,

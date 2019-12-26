@@ -18,7 +18,8 @@
     OR = |
     NOT = ~
     XOR = ^
-    leftrotate = << ?
+    leftrotate = combo << | >> to don't loose anything
+    https://www.tutorialspoint.com/cprogramming/c_bitwise_operators.htm
 */
 
 uint32_t    F(uint32_t B, uint32_t C, uint32_t D)
