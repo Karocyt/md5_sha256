@@ -26,25 +26,29 @@ static size_t md5_pad512_newsize(size_t size)
 
 }
 
-size_t md5_pad(t_md5_words *words, size_t size)
+size_t md5_pad(t_md5_words **words, size_t size)
 {
     size_t              new_size;
-    t_md5_words         tmp;
+    t_md5_words         *tmp;
 
+    if (!(tmp = malloc(sizeof(t_md5_words))))
+        return (0);
     if (!(new_size = md5_pad512_newsize(size)))
         return (0);
-    if (new_size < size || !(tmp.uint64 = ft_memalloc(new_size)))
+    if (new_size < size || !(tmp->uchar = ft_memalloc(new_size)))
         return (0);
+    ft_printf("CRAZY SIZE: %zu\n", size);
     ft_printf("old_size = %zu, new_size = %zu, tmp = %p, size/8 = %zu, offset = %zu\n", size, new_size, &tmp, size / 8, size / 8 * 8);
-    ft_memcpy(&tmp, words, size);
+    ft_memcpy(tmp->uchar, *words, size); // seems to go to far and override size ?!
+    ft_printf("CRAZY SIZE: %zu\n", size);
     ft_printf("old_size = %zu, new_size = %zu, tmp = %p, size/8 = %zu, offset = %zu\n", size, new_size, &tmp, size / 8, size / 8 * 8);
 
-    tmp.uchar[size] = LEADING_ONE; // padding goes just after original msg, so at size
+    tmp->uchar[size] = LEADING_ONE; // padding goes just after original msg, so at size
     //ft_printf("first padding value is == %lld\n", tmp[size]);
     //ft_memcpy(tmp + new_size - 8, &size, 8);
     //ft_printf("written size is %lld when size was %lld\n", tmp[new_size - 1], size);
 
-    free(words);
+    free(*words);
     *words = tmp;
     return (new_size);
 }

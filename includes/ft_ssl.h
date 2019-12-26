@@ -16,7 +16,7 @@
 # define USAGE "usage: ft_ssl command [-pqr] [-s string] [file ...]\n"
 # include "libft.h"
 
-# define LEADING_ONE (unsigned char)1 << 7
+# define LEADING_ONE ((unsigned char)1 << 7)
 
 // (à partir du premier fichier ne prend que des fichiers)
 
@@ -56,7 +56,7 @@ char 			*ssl_sha256(unsigned char *input, size_t size);
 void    		ssl_clear_items(t_item **lst);
 int        		ssl_add_item_from_str(t_item **lst, char *str);
 int        		ssl_add_item_from_fd(t_item **lst, int fd);
-size_t 			md5_pad(t_md5_words *words, size_t size);
+size_t 			md5_pad(t_md5_words **words, size_t size);
 
 
 

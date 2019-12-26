@@ -18,9 +18,9 @@ char *ssl_md5(unsigned char *input, size_t size)
 	//return (ft_strdup("MD5"));
 	//(void)size;
 	//(void)input;
-    t_md5_words words;
+    t_md5_words *words;
 
-    words = (t_md5_words)input;
+    words = (t_md5_words *)input;
 	if (!(size = md5_pad(&words, size)))
         return (NULL);
 	
