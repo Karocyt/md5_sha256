@@ -128,7 +128,7 @@ char    *ssl_md5(unsigned char *input, size_t size)
     ft_printf("main_reg init: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     while (++i < iter)
     {
-        tmp = main_reg;
+        tmp = main_reg; // g_init_reg ?! Anyway, not relevant for short input as only one pass so they're equals
         md5_loop512(words->uint32 + (i * 64), &tmp); // r not reinitialized for each 512bits block
         main_reg.a += tmp.a;
         main_reg.b += tmp.b;
