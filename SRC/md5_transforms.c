@@ -29,7 +29,7 @@ uint32_t    md5_f(uint32_t B, uint32_t C, uint32_t D)
 
 uint32_t    md5_g(uint32_t B, uint32_t C, uint32_t D)
 {
-    return ((B ^ D ) | (C & ~D));
+    return ((B & D) | (C & ~D));
 }
 
 uint32_t    md5_h(uint32_t B, uint32_t C, uint32_t D)
@@ -44,5 +44,5 @@ uint32_t    md5_i(uint32_t B, uint32_t C, uint32_t D)
 
 uint32_t    md5_leftrotate(uint32_t x, uint32_t c)
 {
-    return ((x << c) | (x >> (sizeof(uint32_t)-c)));
+    return ((x << c) | (x >> (32-c)));
 }
