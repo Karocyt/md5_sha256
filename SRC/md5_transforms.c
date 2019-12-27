@@ -22,27 +22,27 @@
     https://www.tutorialspoint.com/cprogramming/c_bitwise_operators.htm
 */
 
-uint32_t    F(uint32_t B, uint32_t C, uint32_t D)
+uint32_t    md5_f(uint32_t B, uint32_t C, uint32_t D)
 {
     return ((B & C) | (~B & D));
 }
 
-uint32_t    G(uint32_t B, uint32_t C, uint32_t D)
+uint32_t    md5_g(uint32_t B, uint32_t C, uint32_t D)
 {
     return ((B ^ D ) | (C & ~D));
 }
 
-uint32_t    H(uint32_t B, uint32_t C, uint32_t D)
+uint32_t    md5_h(uint32_t B, uint32_t C, uint32_t D)
 {
     return (B ^ C ^ D);
 }
 
-uint32_t    I(uint32_t B, uint32_t C, uint32_t D)
+uint32_t    md5_i(uint32_t B, uint32_t C, uint32_t D)
 {
     return (C ^ (B | ~D));
 }
 
-uint32_t    leftrotate(uint32_t x, uint32_t c)
+uint32_t    md5_leftrotate(uint32_t x, uint32_t c)
 {
     return ((x << c) | (x >> (sizeof(uint32_t)-c)));
 }

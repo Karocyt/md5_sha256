@@ -42,23 +42,53 @@ const uint32_t  g_shift[64] = {7, 12, 17, 22, 7, 12, 17, 22,
                                 4, 11, 16, 23, 4, 11, 16, 23,
                                 6, 10, 15, 21, 6, 10, 15, 21,
                                 6, 10, 15, 21, 6, 10, 15, 21 };
-const uint32_t  g_init_a = 0x01234567;
-const uint32_t  g_init_b = 0x89abcdef;
-const uint32_t  g_init_c = 0xfedcba98;
-const uint32_t  g_init_d = 0x76543210;
+const t_reg  g_init_reg = {0x01234567, 0x89abcdef, 0xfedcba98, 0x76543210};
 
-char *ssl_md5(unsigned char *input, size_t size)
+//void    md5_loop64()
+
+void    md5_loop512(uint32_t *words, t_reg *r)
 {
-	//return (ft_strdup("MD5"));
-	//(void)size;
-	//(void)input;
+    int i;
+    int f;
+    int g;
+
+    i = -1;
+    g = 0; // useless, see if compilation errors without as initialization in if/else
+    while (++i < 64)
+    {
+        //left if/else
+
+        f = f + r->a + g_add[i] + words[g];
+        r->a = r->d;
+        r->d = r->c;
+        r->c = r->d;
+        r->b = r->b + leftrotate(f, g_shift[i]);
+    }
+}
+
+char    *ssl_md5(unsigned char *input, size_t size)
+{
     t_md5_words *words;
+    t_reg       tmp;
+    int iter;
+    int i;
+    t_reg  main_reg;
 
     words = (t_md5_words *)input;
-	if (!(size = md5_pad(&words, size)))
+	if (!(size = md5_pad(&words, size)) )
         return (NULL);
-	
-
+	iter = size / 64;
+    i = -1;
+    tmp = g_init_reg;
+    while (++i < iter)
+    {
+        tmp = main_reg;
+        md5_loop512(words->uint32 + (i * 64), &tmp); // r not reinitialized for each 512bits block
+        main_reg.a += tmp.a;
+        main_reg.b += tmp.b;
+        main_reg.c += tmp.c;
+        main_reg.d += tmp.d;
+    }
 
 
 	return (ft_strdup("MD5"));

@@ -17,6 +17,11 @@
 # include "libft.h"
 
 # define LEADING_ONE ((unsigned char)1 << 7)
+# define F md5_f
+# define G md5_g
+# define H md5_h
+# define I md5_i
+#define leftrotate md5_leftrotate
 
 // (à partir du premier fichier ne prend que des fichiers)
 
@@ -47,12 +52,15 @@ typedef union u_md5_words {
 	unsigned char	*uchar;
 }						t_md5_words;
 
+typedef struct s_reg {
+	uint32_t 	a;
+	uint32_t 	b;
+	uint32_t 	c;
+	uint32_t 	d;
+}						t_reg;
+
 const uint32_t	g_add[64];
 const uint32_t  g_shift[64];
-const uint32_t	g_init_a;
-const uint32_t	g_init_b;
-const uint32_t	g_init_c;
-const uint32_t	g_init_d;
 
 void 			*g_funcs[NB_ALGOS];
 
@@ -65,12 +73,11 @@ int    			ssl_add_item_from_str(t_item **lst, char *str);
 int        		ssl_add_item_from_fd(t_item **lst, int fd);
 
 size_t 			md5_pad(t_md5_words **words, size_t size);
-uint32_t    	F(uint32_t B, uint32_t C, uint32_t D);
-uint32_t    	G(uint32_t B, uint32_t C, uint32_t D);
-uint32_t    	H(uint32_t B, uint32_t C, uint32_t D);
-uint32_t    	I(uint32_t B, uint32_t C, uint32_t D);
-uint32_t    	leftrotate(uint32_t x, uint32_t c);
-
+uint32_t    	md5_f(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	md5_g(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	md5_h(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	md5_i(uint32_t B, uint32_t C, uint32_t D);
+uint32_t    	md5_leftrotate(uint32_t x, uint32_t c);
 
 
 
