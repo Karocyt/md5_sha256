@@ -41,8 +41,8 @@ const uint32_t  g_shift[64] = {7, 12, 17, 22, 7, 12, 17, 22,
                                 4, 11, 16, 23, 4, 11, 16, 23,
                                 4, 11, 16, 23, 4, 11, 16, 23,
                                 6, 10, 15, 21, 6, 10, 15, 21,
-                                6, 10, 15, 21, 6, 10, 15, 21 };
-const t_reg  g_init_reg = {0x01234567, 0x89abcdef, 0xfedcba98, 0x76543210};
+                                6, 10, 15, 21, 6, 10, 15, 21};
+const t_reg  g_init_reg = {0x67452301, 0xefcdab89, 0x98bacdef, 0x10325476};//{0x01234567, 0x89abcdef, 0xfedcba98, 0x76543210};
 
 int    md5_loop64(int i, int *f, uint32_t *words) // returns g
 {
@@ -86,7 +86,7 @@ void    md5_loop512(uint32_t *words, t_reg *r)
         r->d = r->c;
         r->c = r->b;
         r->b = r->b + leftrotate(f, g_shift[i]);
-        ft_printf("\ttmp state: %x, %x, %x, %x\n", r->a, r->b, r->c, r->d);
+        //ft_printf("\ttmp state: %x, %x, %x, %x\n", r->a, r->b, r->c, r->d);
     }
 }
 
@@ -117,7 +117,6 @@ char    *ssl_md5(unsigned char *input, size_t size)
     int iter;
     int i;
     t_reg  main_reg;
-    char *to_delete;
 
     words = (t_md5_words *)input;
 	if (!(size = md5_pad(&words, size)) )
@@ -125,7 +124,7 @@ char    *ssl_md5(unsigned char *input, size_t size)
 	iter = size / 64;
     i = -1;
     main_reg = g_init_reg;
-    ft_printf("main_reg init: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
+    //ft_printf("main_reg init: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     while (++i < iter)
     {
         tmp = main_reg; // g_init_reg ?! Anyway, not relevant for short input as only one pass so they're equals
@@ -136,8 +135,5 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.d += tmp.d;
         ft_printf("main_reg state: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     }
-
-    to_delete = md5_digest(main_reg);
-    ft_printf("%s\n", to_delete);
-	return (to_delete);
+	return (ft_spf("%x%x%x%x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
 }
