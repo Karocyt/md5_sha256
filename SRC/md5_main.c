@@ -42,7 +42,7 @@ const uint32_t  g_shift[64] = {7, 12, 17, 22, 7, 12, 17, 22,
                                 4, 11, 16, 23, 4, 11, 16, 23,
                                 6, 10, 15, 21, 6, 10, 15, 21,
                                 6, 10, 15, 21, 6, 10, 15, 21};
-const t_reg  g_init_reg = {0x67452301, 0xefcdab89, 0x98bacdef, 0x10325476};//{0x01234567, 0x89abcdef, 0xfedcba98, 0x76543210};
+const t_reg  g_init_reg = {0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476};//{0x01234567, 0x89abcdef, 0xfedcba98, 0x76543210};
 
 int    md5_loop64(int i, int *f, uint32_t *words) // returns g
 {
@@ -104,7 +104,7 @@ char    *md5_digest(t_reg r)
     while (++i < 16)
     {
         res[i * 2] = base[uchar[i] / 16];
-        res [i * 2 + 1] = base[uchar[i] % 16];
+        res[i * 2 + 1] = base[uchar[i] % 16];
     }
     res[32] = 0;
     return res;
