@@ -19,8 +19,11 @@ static size_t md5_pad512_newsize(size_t size)
     size_t      new_size;
 
     new_size = (size / 64 + 1) * 64; // %64 should be 56, but we'll need to append a size_t so should equals 0
-    if (new_size - 9 <= size) // 8 for size_t + 1 for required minimal padding
+    if (new_size - 8 <= size) // 8 for size_t + 1 for required minimal padding
         new_size += 64;
+
+    ft_printf("size %% 512= %zu, hence needs %zu to reach 448 and %zu with size so should be %zu but is %zu\n",
+        size * 8 % 512, 448 - size * 8 % 512, 448 - size * 8 % 512 + 64, size * 8 + (448 - size * 8 % 512) + 64, new_size * 8);
     //ft_printf("size bits: %zu, size %%512bits: %zu\nnew_size bits: %zu, new_size %%512bits: %zu\n", size*8, size*8 % 512, new_size*8, new_size*8 % 512);
     return (new_size);
 
@@ -38,7 +41,6 @@ size_t md5_pad(t_md5_words **words, size_t size)
     if (new_size < size || !(tmp->uchar = ft_memalloc(new_size)))
         return (0);
     //ft_printf("CRAZY SIZE: %zu\n", size);
-    //ft_printf("old_size = %zu, new_size = %zu, tmp = %p, size/8 = %zu, offset = %zu\n", size, new_size, &tmp, size / 8, size / 8 * 8);
     ft_memcpy(tmp->uchar, *words, size); // seems to go to far and override size ?!
     tmp->uchar[size] = LEADING_ONE; // append bit 1 right after
     
