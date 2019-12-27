@@ -37,7 +37,6 @@ char		*ft_spf(const char *input, ...)
 	va_start(ap, input);
 	ft_main_printf(&str, input, ap);
 	va_end(ap);
-	free(str);
 	return (str);
 }
 

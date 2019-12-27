@@ -44,7 +44,32 @@ const uint32_t  g_shift[64] = {7, 12, 17, 22, 7, 12, 17, 22,
                                 6, 10, 15, 21, 6, 10, 15, 21 };
 const t_reg  g_init_reg = {0x01234567, 0x89abcdef, 0xfedcba98, 0x76543210};
 
-//void    md5_loop64()
+int    md5_loop64(int i, int *f, uint32_t *words) // returns g
+{
+    int g;
+
+    if (i < 16)
+    {
+        *f = F(words[1], words[2], words[3]);
+        g = i;
+    }
+    else if (i < 32)
+    {
+        *f = G(words[1], words[2], words[3]);
+        g = (5 * i + 1) % 16; 
+    }
+    else if (i < 48)
+    {
+        *f = H(words[1], words[2], words[3]);
+        g = (3 * i + 5) % 16;
+    }
+    else
+    {
+        *f = I(words[1], words[2], words[3]);
+        g = (7 * i) % 16;
+    }
+    return (g);
+}
 
 void    md5_loop512(uint32_t *words, t_reg *r)
 {
@@ -53,17 +78,36 @@ void    md5_loop512(uint32_t *words, t_reg *r)
     int g;
 
     i = -1;
-    g = 0; // useless, see if compilation errors without as initialization in if/else
     while (++i < 64)
     {
-        //left if/else
-
+        g = md5_loop64(i, &f, words);
         f = f + r->a + g_add[i] + words[g];
         r->a = r->d;
         r->d = r->c;
-        r->c = r->d;
+        r->c = r->b;
         r->b = r->b + leftrotate(f, g_shift[i]);
+        ft_printf("\ttmp state: %x, %x, %x, %x\n", r->a, r->b, r->c, r->d);
     }
+}
+
+char    *md5_digest(t_reg r)
+{
+    char *res;
+    const char  *base = "0123456789abcdef";
+    int i;
+    uint8_t *uchar;
+
+    if (!(res = malloc(33)))
+        return (NULL);
+    i = -1;
+    uchar = (uint8_t *)&r;
+    while (++i < 16)
+    {
+        res[i * 2] = base[uchar[i] / 16];
+        res [i * 2 + 1] = base[uchar[i] % 16];
+    }
+    res[32] = 0;
+    return res;
 }
 
 char    *ssl_md5(unsigned char *input, size_t size)
@@ -73,13 +117,15 @@ char    *ssl_md5(unsigned char *input, size_t size)
     int iter;
     int i;
     t_reg  main_reg;
+    char *to_delete;
 
     words = (t_md5_words *)input;
 	if (!(size = md5_pad(&words, size)) )
         return (NULL);
 	iter = size / 64;
     i = -1;
-    tmp = g_init_reg;
+    main_reg = g_init_reg;
+    ft_printf("main_reg init: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     while (++i < iter)
     {
         tmp = main_reg;
@@ -88,8 +134,10 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.b += tmp.b;
         main_reg.c += tmp.c;
         main_reg.d += tmp.d;
+        ft_printf("main_reg state: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     }
 
-
-	return (ft_strdup("MD5"));
+    to_delete = md5_digest(main_reg);
+    ft_printf("%s\n", to_delete);
+	return (to_delete);
 }
