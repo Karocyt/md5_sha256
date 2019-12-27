@@ -135,5 +135,9 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.d += tmp.d;
         //ft_printf("main_reg state: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     }
+
+    int test = 1;
+    char *str = (char *)&test;
+    ft_printf("%hhi, %hhi\n", str[0], str[3]);
 	return (ft_spf("%08x%08x%08x%08x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
 }
