@@ -41,7 +41,12 @@ size_t md5_pad(t_md5_words **words, size_t size)
     //ft_printf("old_size = %zu, new_size = %zu, tmp = %p, size/8 = %zu, offset = %zu\n", size, new_size, &tmp, size / 8, size / 8 * 8);
     ft_memcpy(tmp->uchar, *words, size); // seems to go to far and override size ?!
     tmp->uchar[size] = LEADING_ONE; // append bit 1 right after
-    ft_memcpy(tmp->uchar + new_size - sizeof(size_t), &size, sizeof(size_t)); // write size at end
+    tmp->uint32[size / 4 - 2] = ((uint32_t *)&size)[0];
+    tmp->uint32[size / 4 - 1] = ((uint32_t *)&size)[1];
+
+
+    //ft_memcpy(tmp->uchar + new_size - sizeof(size_t), &size, sizeof(size_t)); // write size at end
+    
     //ft_printf("written size is %lld when size was %lld\n", *((uint64_t *)(tmp->uchar + new_size - 8)), size);
 
     free(*words);
