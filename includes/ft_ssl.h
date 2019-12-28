@@ -72,6 +72,7 @@ void    		ssl_clear_items(t_item **lst);
 int    			ssl_add_item_from_str(t_item **lst, char *str);
 int        		ssl_add_item_from_fd(t_item **lst, int fd);
 
+unsigned char 	*md5_original(void *data, size_t len);
 size_t 			md5_pad(t_md5_words **words, size_t size);
 uint32_t    	md5_f(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	md5_g(uint32_t B, uint32_t C, uint32_t D);

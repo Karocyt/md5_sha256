@@ -33,6 +33,7 @@ SRC_NAME =	md5_main.c \
 			md5_transforms.c \
 			ssl_process.c \
 			ssl_params.c \
+			ssl_originals.c \
 			items_list_management.c \
 			sha256_main.c \
 			utils.c \

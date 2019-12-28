@@ -137,6 +137,11 @@ char    *ssl_md5(unsigned char *input, size_t size)
     int i;
     t_reg  main_reg;
 
+    // ORIGINAL
+
+    t_reg *original = (t_reg *)md5_original(input, size);
+    // ORIGINAL END
+
     words = (t_md5_words *)input;
 	if (!(size = md5_pad(&words, size)) )
         return (NULL);
@@ -153,6 +158,8 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.d += tmp.d;
     }
     ft_printf("new_digest: %s\n", md5_digest(main_reg));
+    if (!ft_memcmp(&main_reg, original, 16))
+        ft_printf("SUCCESS!\n");
 
     words = (t_md5_words *)input;
     if (!(size = md5_pad(&words, size)) )
@@ -170,6 +177,8 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.d += tmp.d;
     }
     ft_printf("loop512_old: %s\n", md5_digest(main_reg));
+    if (!ft_memcmp(&main_reg, original, 16))
+        ft_printf("SUCCESS!\n");
     
     words = (t_md5_words *)input;
     if (!(size = md5_pad(&words, size)) )
@@ -187,6 +196,8 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.d += tmp.d;
     }
     ft_printf("loop_512_reg: %s\n", md5_digest(main_reg));
+    if (!ft_memcmp(&main_reg, original, 16))
+        ft_printf("SUCCESS!\n");
 
     return (ft_strdup("MD5"));
 }
