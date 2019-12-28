@@ -13,6 +13,12 @@
 
 #include "ft_ssl.h"
 
+/*
+	https://tools.ietf.org/html/rfc4634
+	http://www.iwar.org.uk/comsec/resources/cipher/sha256-384-512.pdf
+	https://en.wikipedia.org/wiki/SHA-2
+*/
+
 char *ssl_sha256(unsigned char *input, size_t size)
 {
     return (ft_strdup("SHA256"));
