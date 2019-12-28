@@ -26,7 +26,6 @@ unsigned char *md5_original(void *data, size_t len)
 {
 	unsigned char *digest;
 	struct MD5state_st context;
-	char md5string[33];
 	int i;
 
 	if (!(digest = malloc(16)))
@@ -36,8 +35,9 @@ unsigned char *md5_original(void *data, size_t len)
 	MD5_Final(digest, &context);
 
 	i = -1;
+	ft_printf("md5_original: \t");
 	while (++i < 16)
-    	sprintf(&md5string[i*2], "%02x", (unsigned int)digest[i]);
-    ft_printf("md5_original: \t%s\n", md5string);
+    	ft_printf("%02x", (unsigned int)digest[i]);
+    ft_printf("\n");
 	return (digest);
 }
