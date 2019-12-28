@@ -71,6 +71,8 @@ char    *ssl_md5(unsigned char *input, size_t size)
     int i;
     t_reg  main_reg;
 
+
+    t_reg *original = (t_reg *)md5_original(input, size);
     words = (t_md5_words *)input;
 	if (!(size = md5_pad(&words, size)) )
         return (NULL);
@@ -86,5 +88,9 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.c += tmp.c;
         main_reg.d += tmp.d;
     }
+
+    
+    if (!ft_memcpy(original, &main_reg, 16))
+        ft_printf("SUCCESS");
     return (md5_digest(main_reg));
 }
