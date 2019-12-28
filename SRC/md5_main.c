@@ -162,24 +162,24 @@ char    *ssl_md5(unsigned char *input, size_t size)
         ft_printf("SUCCESS!\n");
 
     // OLD broken (using words instead of registers)
-    words = (t_md5_words *)input;
-    if (!(size = md5_pad(&words, size)) )
-        return (NULL);
-    iter = size / 64;
-    i = -1;
-    main_reg = g_init_reg;
-    while (++i < iter)
-    {
-        tmp = main_reg;
-        md5_loop512_old(&words->uint32[i * 16], &tmp);
-        main_reg.a += tmp.a;
-        main_reg.b += tmp.b;
-        main_reg.c += tmp.c;
-        main_reg.d += tmp.d;
-    }
-    ft_printf("loop512_old: \t%s\n", md5_digest(main_reg));
-    if (!ft_memcmp(&main_reg, original, 16))
-        ft_printf("SUCCESS!\n");
+    // words = (t_md5_words *)input;
+    // if (!(size = md5_pad(&words, size)) )
+    //     return (NULL);
+    // iter = size / 64;
+    // i = -1;
+    // main_reg = g_init_reg;
+    // while (++i < iter)
+    // {
+    //     tmp = main_reg;
+    //     md5_loop512_old(&words->uint32[i * 16], &tmp);
+    //     main_reg.a += tmp.a;
+    //     main_reg.b += tmp.b;
+    //     main_reg.c += tmp.c;
+    //     main_reg.d += tmp.d;
+    // }
+    // ft_printf("loop512_old: \t%s\n", md5_digest(main_reg));
+    // if (!ft_memcmp(&main_reg, original, 16))
+    //     ft_printf("SUCCESS!\n");
     
     // OLD with registers
     words = (t_md5_words *)input;
