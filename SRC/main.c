@@ -32,7 +32,17 @@ static void ssl_opts_print(char *output, t_params *params)
     (void)params;
 }
 
-int ssl_process(t_params *params)
+static int ssl_clean(t_params *params, int i)
+{
+    if (params)
+    {
+        ssl_clear_items(&params->items);
+        free(params);
+    }
+    return (i);
+}
+
+static int ssl_process(t_params *params)
 {
     t_item          *item;
     char            *(*orig)(unsigned char*, size_t);
@@ -53,17 +63,6 @@ int ssl_process(t_params *params)
         item = item->next;
     }
     return (0);
-}
-
-
-int ssl_clean(t_params *params, int i)
-{
-    if (params)
-    {
-        ssl_clear_items(&params->items);
-        free(params);
-    }
-    return (i);
 }
 
 int main(int ac, char **av)
