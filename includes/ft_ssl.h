@@ -36,10 +36,11 @@ typedef struct s_item {
 }						t_item;
 
 typedef struct s_ssl {
-	uint8_t			p;
-	uint8_t			q;
-	uint8_t			r;
-	uint8_t			s;
+	uint8_t			p:1;
+	uint8_t			q:1;
+	uint8_t			r:1;
+	uint8_t			s:1;
+	uint8_t			c:1;
 	t_hash			h;
 	t_item			*items;
 }						t_params;
@@ -61,6 +62,7 @@ const uint32_t	g_add[64];
 const uint32_t  g_shift[64];
 
 void 			*g_funcs[NB_ALGOS];
+void 			*g_originals[NB_ALGOS];
 
 int 			ssl_process(t_params *params);
 int 			ssl_read_params(int ac, char **av, t_params *params);
@@ -71,7 +73,7 @@ int    			ssl_add_item_from_str(t_item **lst, char *str);
 int        		ssl_add_item_from_fd(t_item **lst, int fd);
 
 unsigned char 	*md5_original(void *data, size_t len);
-size_t 			md5_pad(t_md5_words **words, size_t size);
+//size_t 			md5_pad(t_md5_words **words, size_t size);
 uint32_t    	md5_f(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	md5_g(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	md5_h(uint32_t B, uint32_t C, uint32_t D);
@@ -79,6 +81,8 @@ uint32_t    	md5_i(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	md5_leftrotate(uint32_t x, uint32_t c);
 
 void    		md5_loop512(uint32_t *words, t_reg *r);
+
+unsigned char 	*sha256_original(void *data, size_t len);
 
 
 

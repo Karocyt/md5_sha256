@@ -19,6 +19,12 @@ void *g_funcs[NB_ALGOS] =
 	&ssl_sha256
 };
 
+void *g_originals[NB_ALGOS] =
+{
+	&md5_original,
+	&sha256_original
+};
+
 static void ssl_opts_print(char *output, t_params *params)
 {
 	ft_putendl(output);
@@ -40,11 +46,19 @@ static char *apply_hash(t_item *item, char *(*f)(unsigned char*, size_t))
 int ssl_process(t_params *params)
 {
 	t_item 			*item;
+	char 			*(*orig)(unsigned char*, size_t);
+	void			*digest;
 
     //ft_printf("process\n");
 	item = params->items;
 	while (item)
 	{
+		if (params->c)
+		{
+			orig = g_originals[params->h];
+			digest = orig(item->content, item->size);
+			free(digest);
+		}
 		ssl_opts_print(apply_hash(item, g_funcs[params->h]), params);
 		item = item->next;
 	}

@@ -32,6 +32,8 @@ static int     ssl_read_opts(char *str, t_params *params)
             params->r = 1;
         else if (str[i] == 's' && !params->s)
             params->s = 1;
+        else if (str[i] == 'c' && !params->c)
+            params->c = 1;
         else
             return (0);
     }

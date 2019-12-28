@@ -41,3 +41,11 @@ unsigned char *md5_original(void *data, size_t len)
     ft_printf("\n");
 	return (digest);
 }
+
+unsigned char *sha256_original(void *data, size_t len)
+{
+	(void)data;
+	(void)len;
+
+	return (NULL);
+}
