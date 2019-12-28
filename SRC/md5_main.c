@@ -39,7 +39,7 @@ size_t md5_pad(t_md5_words **words, size_t size)
     tmp->uchar[size] = LEADING_ONE;
     
     tmp->uint64[new_size / 8 - 1] = size * 8;
-    free(*words);
+    //free(*words);
     *words = tmp;
     return (new_size);
 }
@@ -92,8 +92,8 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.c += tmp.c;
         main_reg.d += tmp.d;
     }
-
-    
+    free(words->uchar);
+    free(words);
     //if (!ft_memcpy(original, &main_reg, 16))
     //    ft_printf("SUCCESS");
     return (md5_digest(main_reg));

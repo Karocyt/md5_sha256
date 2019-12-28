@@ -13,17 +13,28 @@
 
 #include "ft_ssl.h"
 
+int ssl_clean(t_params *params, int i)
+{
+    if (params)
+    {
+        ssl_clear_items(&params->items);
+        free(params);
+    }
+    return (i);
+}
+
 int main(int ac, char **av)
 {
     t_params *params;
 
+    params = NULL;
     if (ac > 1 && (params = ft_memalloc(sizeof(t_params))) &&
         !ssl_read_params(ac, av, params) && !ssl_process(params))
     {
         //ft_printf("Done.\n");
-	   	return (0);
+	   	return (ssl_clean(params, 0));
     }
 	//left to clean
     ft_putstr(USAGE);
-	return (1);
+	return (ssl_clean(params, 1));
 }

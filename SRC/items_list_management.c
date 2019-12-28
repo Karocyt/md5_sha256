@@ -72,7 +72,8 @@ void    ssl_clear_items(t_item **lst)
     while ((curr = next))
     {
         next = curr->next;
-        free(curr->content);
+        if (curr->content)
+            free(curr->content);
         free(curr);
     }
     *lst = NULL;
