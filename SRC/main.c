@@ -13,6 +13,49 @@
 
 #include "ft_ssl.h"
 
+void *g_funcs[NB_ALGOS] =
+{
+    &ssl_md5,
+    &ssl_sha256
+};
+
+void *g_originals[NB_ALGOS] =
+{
+    &md5_original,
+    &sha256_original
+};
+
+static void ssl_opts_print(char *output, t_params *params)
+{
+    ft_putendl(output);
+    free(output);
+    (void)params;
+}
+
+int ssl_process(t_params *params)
+{
+    t_item          *item;
+    char            *(*orig)(unsigned char*, size_t);
+    char            *(*mine)(unsigned char*, size_t);
+    void            *digest;
+
+    item = params->items;
+    while (item)
+    {
+        if (params->c)
+        {
+            orig = g_originals[params->h];
+            digest = orig(item->content, item->size);
+            free(digest);
+        }
+        mine = g_funcs[params->h];
+        ssl_opts_print(mine(item->content, item->size), params);
+        item = item->next;
+    }
+    return (0);
+}
+
+
 int ssl_clean(t_params *params, int i)
 {
     if (params)
@@ -30,11 +73,7 @@ int main(int ac, char **av)
     params = NULL;
     if (ac > 1 && (params = ft_memalloc(sizeof(t_params))) &&
         !ssl_read_params(ac, av, params) && !ssl_process(params))
-    {
-        //ft_printf("Done.\n");
 	   	return (ssl_clean(params, 0));
-    }
-	//left to clean
     ft_putstr(USAGE);
 	return (ssl_clean(params, 1));
 }

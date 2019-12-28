@@ -21,7 +21,6 @@ static int     ssl_read_opts(char *str, t_params *params)
     i = 0;
     if (str[i] != '-')
         return (0);
-    //ft_printf("read_opts: %s\n", str);
     while (str[++i])
     {
         if (str[i] == 'p' && !params->p)
@@ -37,7 +36,6 @@ static int     ssl_read_opts(char *str, t_params *params)
         else
             return (0);
     }
-    //ft_printf("opts: pqrs = %d%d%d%d\n", params->p, params->q, params->r, params->s);
     return (1);
 }
 
@@ -45,8 +43,7 @@ static int ssl_add_file(char *filename, t_params *params)
 {
     int             fd;
 
-    //ft_printf("add_file: %s\n", filename);
-    if ((fd = open(filename, O_RDONLY)) < 0) // else stdout
+    if ((fd = open(filename, O_RDONLY)) < 0)
         return (0);
     ssl_add_item_from_fd(&params->items, fd);
     return (1);
@@ -60,7 +57,6 @@ static int ssl_set_algo(char *str, t_params *params)
         params->h = SHA256;
     else
         return (0);
-    //ft_printf("set_algo: %s\n", str);
     return (1);
 }
 

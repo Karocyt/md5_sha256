@@ -39,7 +39,6 @@ size_t md5_pad(t_md5_words **words, size_t size)
     tmp->uchar[size] = LEADING_ONE;
     
     tmp->uint64[new_size / 8 - 1] = size * 8;
-    //free(*words);
     *words = tmp;
     return (new_size);
 }
@@ -64,10 +63,6 @@ char    *md5_digest(t_reg r)
     return res;
 }
 
-/*
-    t_reg *original = (t_reg *)md5_original(input, size);
-*/
-
 char    *ssl_md5(unsigned char *input, size_t size)
 {
     t_md5_words *words;
@@ -76,7 +71,6 @@ char    *ssl_md5(unsigned char *input, size_t size)
     int i;
     t_reg  main_reg;
 
-    //t_reg *original = (t_reg *)md5_original(input, size);
     words = (t_md5_words *)input;
 	if (!(size = md5_pad(&words, size)) )
         return (NULL);
@@ -94,7 +88,5 @@ char    *ssl_md5(unsigned char *input, size_t size)
     }
     free(words->uchar);
     free(words);
-    //if (!ft_memcpy(original, &main_reg, 16))
-    //    ft_printf("SUCCESS");
     return (md5_digest(main_reg));
 }

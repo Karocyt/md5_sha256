@@ -31,12 +31,10 @@ INCLUDES = -I$(LFTDIR)/includes -Iincludes
 SRC_NAME =	md5_main.c \
 			md5_rounds.c \
 			md5_transforms.c \
-			ssl_process.c \
 			ssl_params.c \
 			ssl_originals.c \
 			items_list_management.c \
 			sha256_main.c \
-			utils.c \
 			main.c
 
 C_FILES = $(addprefix $(SRCDIR), $(SRC_NAME))
