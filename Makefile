@@ -104,64 +104,52 @@ test: test_md5 test_sha256
 
 md5_1_file: all
 	@echo -n "md5 1 file:\n"
-	@openssl md5 ./Makefile
-	@./ft_ssl md5 ./Makefile
+	@./ft_ssl md5 -c ./Makefile
 	@echo
 
 md5_2_files: all
 	@echo -n "2 files:\n"
-	@openssl md5 ./Makefile ./ft_ssl
-	@./ft_ssl md5 ./Makefile ./ft_ssl
+	@./ft_ssl md5 -c ./Makefile ./ft_ssl
 	@echo
 
 md5_stdin_pipe:
 	@echo -n "stdin pipe:\n"
-	@echo -n hello | openssl md5
-	@echo -n hello | ./ft_ssl md5
+	@echo -n hello | ./ft_ssl md5 -c
 	@echo
 
 md5_str:
 	@echo -n "\nstring as parameter:\n"
-	@echo -n "hello2" | openssl md5
-	@./ft_ssl md5 -s "hello2"
+	@./ft_ssl md5 -cs "hello2"
 	@echo
 
 md5_str_file:
 	@echo -n "\nstring and file:\n"
-	@echo -n hello | openssl md5
-	@openssl md5 ./Makefile
-	@./ft_ssl md5 -s hello ./Makefile
+	@./ft_ssl md5 -cs hello ./Makefile
 	@echo
 
 sha256_1_file: all
 	@echo -n "md5 1 file:\n"
-	@openssl sha256 ./Makefile
-	@./ft_ssl sha256 ./Makefile
+	@./ft_ssl sha256 -c ./Makefile
 	@echo
 
 sha256_2_files: all
 	@echo -n "2 files:\n"
-	@openssl sha256 ./Makefile ./ft_ssl
-	@./ft_ssl sha256 ./Makefile ./ft_ssl
+	@./ft_ssl sha256 -c ./Makefile ./ft_ssl
 	@echo
 
 sha256_stdin_pipe:
 	@echo -n "stdin pipe:\n"
-	@echo -n hello | openssl sha256
-	@echo -n hello | ./ft_ssl sha256
+	@echo -n hello | ./ft_ssl sha256 -c
 	@echo
 
 sha256_str:
 	@echo -n "\nstring as parameter:\n"
-	@echo -n hello | openssl sha256
-	@./ft_ssl sha256 -s hello
+	@./ft_ssl sha256 -sc hello
 	@echo
 
 sha256_str_file:
 	@echo -n "\nstring and file:\n"
-	@echo -n hello | openssl sha256
-	@openssl sha256 ./Makefile
-	@./ft_ssl sha256 -s hello ./Makefile
+	@./ft_ssl sha256 -cs hello ./Makefile
 	@echo
 
 test_empty:
