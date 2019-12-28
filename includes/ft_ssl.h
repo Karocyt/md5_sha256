@@ -21,7 +21,7 @@
 # define G md5_g
 # define H md5_h
 # define I md5_i
-# define leftrotate md5_leftrotate
+# define lr md5_leftrotate
 
 typedef enum e_hash_functions {
 	NB_ALGOS = 2,
