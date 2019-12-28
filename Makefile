@@ -26,6 +26,7 @@ SRCDIR = SRC/
 OBJDIR = OBJ/
 LFTDIR = libft
 LFT = libft.a
+LIBS = -L$(LFTDIR) -lft -lssl -lcrypto
 INCLUDES = -I$(LFTDIR)/includes -Iincludes
 SRC_NAME =	md5_main.c \
 			md5_rounds.c \
@@ -50,7 +51,7 @@ NAME = ft_ssl
 all: $(NAME)
 
 $(NAME): $(LFTDIR)/$(LFT) $(OBJDIR) $(O_FILES) $(H_FILE) | signature
-	$(CC) $(CPPFLAGS) -o $(NAME) $(O_FILES) -L$(LFTDIR) -lft
+	$(CC) $(CPPFLAGS) -o $(NAME) $(O_FILES) $(LIBS)
 
 $(OBJDIR):
 	@mkdir $@

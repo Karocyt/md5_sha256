@@ -14,25 +14,26 @@
 #if defined(__APPLE__)
 #  define COMMON_DIGEST_FOR_OPENSSL
 #  include <CommonCrypto/CommonDigest.h>
-#  define MD5Context CC_MD5state_st
+#  define MD5state_st CC_MD5state_st
 #  define MD5_ CC_MD5_
 #else
 #  include <openssl/md5.h>
 #endif
+#include <stdio.h>
 #include "libft.h"
 
 unsigned char *md5_original(void *data, size_t len)
 {
 	unsigned char *digest;
-	struct MD5Context context;
+	struct MD5state_st context;
 	char md5string[33];
 	int i;
 
 	if (!(digest = malloc(16)))
 		return (NULL);
-	CC_MD5_Init(&context);
-	CC_MD5_Update(&context, data, len);
-	CC_MD5_Final(digest, &context);
+	MD5_Init(&context);
+	MD5_Update(&context, data, len);
+	MD5_Final(digest, &context);
 
 	i = -1;
 	while (++i < 16)
