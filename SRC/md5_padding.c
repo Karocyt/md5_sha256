@@ -17,9 +17,9 @@ static size_t md5_pad512_newsize(size_t size)
 {
     size_t      new_size;
 
-    new_size = (size / 64 + 1) * 64;
-    if (new_size - 8 <= size)
-        new_size += 8;
+    new_size = size + 1 + 8;
+    while (new_size % 64)
+        new_size++;
     return (new_size);
 
 }
