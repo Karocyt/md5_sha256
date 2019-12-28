@@ -28,7 +28,6 @@ LFTDIR = libft
 LFT = libft.a
 INCLUDES = -I$(LFTDIR)/includes -Iincludes
 SRC_NAME =	md5_main.c \
-			md5_padding.c \
 			md5_rounds.c \
 			md5_transforms.c \
 			ssl_process.c \
