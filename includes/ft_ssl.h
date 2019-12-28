@@ -16,7 +16,7 @@
 # define USAGE "usage: ft_ssl command [-pqr] [-s string] [file ...]\n"
 # include "libft.h"
 
-# define LEADING_ONE 128
+# define LEADING_ONE (uint8_t)0x80
 # define F md5_f
 # define G md5_g
 # define H md5_h
