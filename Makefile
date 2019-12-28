@@ -122,8 +122,8 @@ md5_stdin_pipe:
 
 md5_str:
 	@echo -n "\nstring as parameter:\n"
-	@echo -n hello | openssl md5
-	@./ft_ssl md5 -s hello
+	@echo -n "hello2" | openssl md5
+	@./ft_ssl md5 -s "hello2"
 	@echo
 
 md5_str_file:

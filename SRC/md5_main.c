@@ -16,7 +16,8 @@
 /*
     https://en.wikipedia.org/wiki/MD5
     http://practicalcryptography.com/hashes/md5-hash/
-    https://opensource.apple.com/source/CommonCrypto/CommonCrypto-55010/CommonCrypto/CommonDigest.h.auto.html
+    https://opensource.apple.com/source/CommonCrypto/CommonCrypto-55010/
+        CommonCrypto/CommonDigest.h.auto.html
     https://www.ietf.org/rfc/rfc1321.txt
 */
 
@@ -37,79 +38,6 @@ const uint32_t  g_add[64] = {0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
                             0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
                             0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 const t_reg  g_init_reg = {0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476};
-const uint32_t  g_shift[64] = {7, 12, 17, 22, 7, 12, 17, 22,
-                                7, 12, 17, 22, 7, 12, 17, 22,
-                                5, 9, 14, 20, 5, 9, 14, 20,
-                                5, 9, 14, 20, 5, 9, 14, 20,
-                                4, 11, 16, 23, 4, 11, 16, 23,
-                                4, 11, 16, 23, 4, 11, 16, 23,
-                                6, 10, 15, 21, 6, 10, 15, 21,
-                                6, 10, 15, 21, 6, 10, 15, 21};
-
-int    md5_loop64(int i, int *f, uint32_t *words) // returns g
-{
-    int g;
-
-    if (i < 16)
-    {
-        *f = F(words[1], words[2], words[3]);
-        g = i;
-    }
-    else if (i < 32)
-    {
-        *f = G(words[1], words[2], words[3]);
-        g = (5 * i + 1) % 16; 
-    }
-    else if (i < 48)
-    {
-        *f = H(words[1], words[2], words[3]);
-        g = (3 * i + 5) % 16;
-    }
-    else
-    {
-        *f = I(words[1], words[2], words[3]);
-        g = (7 * i) % 16;
-    }
-    return (g);
-}
-
-void    md5_loop512_old(uint32_t *words, t_reg *r)
-{
-    int i;
-    int f;
-    int g;
-
-    i = -1;
-    while (++i < 64)
-    {
-        g = md5_loop64(i, &f, words);
-        f = f + r->a + g_add[i] + words[g];
-        r->a = r->d;
-        r->d = r->c;
-        r->c = r->b;
-        r->b = r->b + leftrotate(f, g_shift[i]);
-        //ft_printf("\ttmp state: %x, %x, %x, %x\n", r->a, r->b, r->c, r->d);
-    }
-}
-
-void    md5_loop512_reg(uint32_t *words, t_reg *r)
-{
-    int i;
-    int f;
-    int g;
-
-    i = -1;
-    while (++i < 64)
-    {
-        g = md5_loop64(i, &f, (uint32_t *)r);
-        f = f + r->a + g_add[i] + words[g];
-        r->a = r->d;
-        r->d = r->c;
-        r->c = r->b;
-        r->b = r->b + leftrotate(f, g_shift[i]);
-        //ft_printf("\ttmp state: %x, %x, %x, %x\n", r->a, r->b, r->c, r->d);
-    }
-}
 
 char    *md5_digest(t_reg r)
 {
@@ -124,12 +52,16 @@ char    *md5_digest(t_reg r)
     uchar = (uint8_t *)&r;
     while (++i < 16)
     {
-        res[i * 2] = base[uchar[i] / 16];           //|
-        res[i * 2 + 1] = base[uchar[i] % 16];       //| === sprintf(res[i*2], "%02x", uchar[i])
+        res[i * 2] = base[uchar[i] / 16];
+        res[i * 2 + 1] = base[uchar[i] % 16];
     }
     res[32] = 0;
     return res;
 }
+
+/*
+    t_reg *original = (t_reg *)md5_original(input, size);
+*/
 
 char    *ssl_md5(unsigned char *input, size_t size)
 {
@@ -139,11 +71,6 @@ char    *ssl_md5(unsigned char *input, size_t size)
     int i;
     t_reg  main_reg;
 
-    // ORIGINAL
-    t_reg *original = (t_reg *)md5_original(input, size);
-    
-
-    // NEW (as spec)
     words = (t_md5_words *)input;
 	if (!(size = md5_pad(&words, size)) )
         return (NULL);
@@ -159,49 +86,5 @@ char    *ssl_md5(unsigned char *input, size_t size)
         main_reg.c += tmp.c;
         main_reg.d += tmp.d;
     }
-    ft_printf("new_digest: \t%s\n", md5_digest(main_reg));
-    if (!ft_memcmp(&main_reg, original, 16))
-        ft_printf("SUCCESS!\n");
-
-    // OLD broken (using words instead of registers)
-    // words = (t_md5_words *)input;
-    // if (!(size = md5_pad(&words, size)) )
-    //     return (NULL);
-    // iter = size / 64;
-    // i = -1;
-    // main_reg = g_init_reg;
-    // while (++i < iter)
-    // {
-    //     tmp = main_reg;
-    //     md5_loop512_old(&words->uint32[i * 16], &tmp);
-    //     main_reg.a += tmp.a;
-    //     main_reg.b += tmp.b;
-    //     main_reg.c += tmp.c;
-    //     main_reg.d += tmp.d;
-    // }
-    // ft_printf("loop512_old: \t%s\n", md5_digest(main_reg));
-    // if (!ft_memcmp(&main_reg, original, 16))
-    //     ft_printf("SUCCESS!\n");
-    
-    // OLD with registers
-    words = (t_md5_words *)input;
-    if (!(size = md5_pad(&words, size)) )
-        return (NULL);
-    iter = size / 64;
-    i = -1;
-    main_reg = g_init_reg;
-    while (++i < iter)
-    {
-        tmp = main_reg;
-        md5_loop512_reg(&words->uint32[i * 16], &tmp);
-        main_reg.a += tmp.a;
-        main_reg.b += tmp.b;
-        main_reg.c += tmp.c;
-        main_reg.d += tmp.d;
-    }
-    ft_printf("loop512_reg: \t%s\n", md5_digest(main_reg));
-    if (!ft_memcmp(&main_reg, original, 16))
-        ft_printf("SUCCESS!\n");
-
-    return (ft_strdup("MD5"));
+    return (md5_digest(main_reg));
 }
