@@ -50,7 +50,7 @@ size_t md5_pad(t_md5_words **words, size_t size)
     
     //ft_printf("written size is %lld when size was %lld\n", *((uint64_t *)(tmp->uchar + new_size - 8)), size);
 
-    free(*words);
+    //free(*words);
     *words = tmp;
     return (new_size);
 }
