@@ -37,6 +37,6 @@ unsigned char *md5_original(void *data, size_t len)
 	i = -1;
 	while (++i < 16)
     	sprintf(&md5string[i*2], "%02x", (unsigned int)digest[i]);
-    ft_printf("md5_original: %s\n", md5string);
+    ft_printf("md5_original: \t%s\n", md5string);
 	return (digest);
 }
