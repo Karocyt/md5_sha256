@@ -16,6 +16,8 @@
 /*
     https://en.wikipedia.org/wiki/MD5
     http://practicalcryptography.com/hashes/md5-hash/
+    https://opensource.apple.com/source/CommonCrypto/CommonCrypto-55010/CommonCrypto/CommonDigest.h.auto.html
+    https://www.ietf.org/rfc/rfc1321.txt
 */
 
 const uint32_t  g_add[64] = {0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
