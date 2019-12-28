@@ -90,6 +90,25 @@ void    md5_loop512_old(uint32_t *words, t_reg *r)
     }
 }
 
+void    md5_loop512_reg(uint32_t *words, t_reg *r)
+{
+    int i;
+    int f;
+    int g;
+
+    i = -1;
+    while (++i < 64)
+    {
+        g = md5_loop64(i, &f, (uint32_t *)r);
+        f = f + r->a + g_add[i] + words[g];
+        r->a = r->d;
+        r->d = r->c;
+        r->c = r->b;
+        r->b = r->b + leftrotate(f, g_shift[i]);
+        //ft_printf("\ttmp state: %x, %x, %x, %x\n", r->a, r->b, r->c, r->d);
+    }
+}
+
 char    *md5_digest(t_reg r)
 {
     char *res;
@@ -124,20 +143,16 @@ char    *ssl_md5(unsigned char *input, size_t size)
 	iter = size / 64;
     i = -1;
     main_reg = g_init_reg;
-    //ft_printf("main_reg init: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     while (++i < iter)
     {
-        tmp = main_reg; // g_init_reg ?! Anyway, not relevant for short input as only one pass so they're equals
-        md5_loop512(&words->uint32[i * 16], &tmp); // r not reinitialized for each 512bits block
+        tmp = main_reg;
+        md5_loop512(&words->uint32[i * 16], &tmp);
         main_reg.a += tmp.a;
         main_reg.b += tmp.b;
         main_reg.c += tmp.c;
         main_reg.d += tmp.d;
-        //ft_printf("main_reg state: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     }
-
     ft_printf("new_digest: %s\n", md5_digest(main_reg));
-    //ft_printf("new_spf: %s\n", ft_spf("%08x%08x%08x%08x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
 
     words = (t_md5_words *)input;
     if (!(size = md5_pad(&words, size)) )
@@ -145,19 +160,33 @@ char    *ssl_md5(unsigned char *input, size_t size)
     iter = size / 64;
     i = -1;
     main_reg = g_init_reg;
-    //ft_printf("main_reg init: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     while (++i < iter)
     {
-        tmp = main_reg; // g_init_reg ?! Anyway, not relevant for short input as only one pass so they're equals
-        md5_loop512_old(&words->uint32[i * 16], &tmp); // r not reinitialized for each 512bits block
+        tmp = main_reg;
+        md5_loop512_old(&words->uint32[i * 16], &tmp);
         main_reg.a += tmp.a;
         main_reg.b += tmp.b;
         main_reg.c += tmp.c;
         main_reg.d += tmp.d;
-        //ft_printf("main_reg state: %x, %x, %x, %x\n", main_reg.a, main_reg.b, main_reg.c, main_reg.d);
     }
+    ft_printf("loop512_old: %s\n", md5_digest(main_reg));
+    
+    words = (t_md5_words *)input;
+    if (!(size = md5_pad(&words, size)) )
+        return (NULL);
+    iter = size / 64;
+    i = -1;
+    main_reg = g_init_reg;
+    while (++i < iter)
+    {
+        tmp = main_reg;
+        md5_loop512_reg(&words->uint32[i * 16], &tmp);
+        main_reg.a += tmp.a;
+        main_reg.b += tmp.b;
+        main_reg.c += tmp.c;
+        main_reg.d += tmp.d;
+    }
+    ft_printf("loop_512_reg: %s\n", md5_digest(main_reg));
 
-    ft_printf("old_digest: %s\n", md5_digest(main_reg));
-    //ft_printf("old_spf: %s\n", ft_spf("%08x%08x%08x%08x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
     return (ft_strdup("MD5"));
 }
