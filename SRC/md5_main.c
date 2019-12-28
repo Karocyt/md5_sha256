@@ -137,7 +137,7 @@ char    *ssl_md5(unsigned char *input, size_t size)
     }
 
     ft_printf("new_digest: %s\n", md5_digest(main_reg));
-    ft_printf("new_spf: %s\n", ft_spf("%08x%08x%08x%08x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
+    //ft_printf("new_spf: %s\n", ft_spf("%08x%08x%08x%08x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
 
     words = (t_md5_words *)input;
     if (!(size = md5_pad(&words, size)) )
@@ -158,6 +158,6 @@ char    *ssl_md5(unsigned char *input, size_t size)
     }
 
     ft_printf("old_digest: %s\n", md5_digest(main_reg));
-    ft_printf("old_spf: %s\n", ft_spf("%08x%08x%08x%08x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
+    //ft_printf("old_spf: %s\n", ft_spf("%08x%08x%08x%08x", main_reg.a, main_reg.b, main_reg.c, main_reg.d));
     return (ft_strdup("MD5"));
 }
