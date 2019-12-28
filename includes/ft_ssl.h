@@ -79,6 +79,8 @@ uint32_t    	md5_h(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	md5_i(uint32_t B, uint32_t C, uint32_t D);
 uint32_t    	md5_leftrotate(uint32_t x, uint32_t c);
 
+void    		md5_loop512(uint32_t *words, t_reg *r);
+
 
 
 #endif
