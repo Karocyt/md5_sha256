@@ -19,7 +19,9 @@
 **	https://en.wikipedia.org/wiki/SHA-2
 */
 
-const t_reg g_sha256_init_reg = {0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476};
+const uint32_t g_sha256_init_reg[8] = {0xc1059ed8, 0x367cd507, 0x3070dd17,
+										0xf70e5939, 0xffc00b31, 0x68581511,
+										0x64f98fa7, 0xbefa4fa4};
 
 size_t	sha256_pad(t_md5_words **words, size_t size)
 {
@@ -40,7 +42,7 @@ size_t	sha256_pad(t_md5_words **words, size_t size)
 	return (new_size);
 }
 
-char	*sha256_digest(t_reg r)
+char	*sha256_digest(uint32_t r[8])
 {
 	char		*res;
 	const char	*base = "0123456789abcdef";
@@ -50,7 +52,7 @@ char	*sha256_digest(t_reg r)
 	if (!(res = ft_memalloc(65)))
 		return (NULL);
 	i = -1;
-	uchar = (uint8_t *)&r;
+	uchar = (uint8_t *)r;
 	while (++i < 2)//64)
 	{
 		res[i * 8] = base[uchar[i * 4 + 3] / 16];
@@ -66,28 +68,37 @@ char	*sha256_digest(t_reg r)
 	return (res);
 }
 
+void	sha256_copy_reg(uint32_t *src, uint32_t *dst)
+{
+	int i;
+
+	i = 0;
+	while (++i < 8)
+		dst[i] = src[i];
+}
+
 char	*ssl_sha256(unsigned char *input, size_t size)
 {
 	t_md5_words	*words;
-	t_reg		tmp;
-	int			iter;
+	uint32_t	tmp[8];
 	int			i;
-	t_reg		main_reg;
+	int			j;
+	uint32_t	main_reg[8];
 
 	words = (t_md5_words *)input;
-	if (!(size = sha256_pad(&words, size)))
+	if ((i = -1) && !(size = sha256_pad(&words, size)))
 		return (NULL);
-	iter = size / 64;
+	sha256_copy_reg((uint32_t *)g_sha256_init_reg, main_reg);
 	i = -1;
-	main_reg = g_sha256_init_reg;
-	while (++i < iter)
+	while (++i < (int)(size / 64))
 	{
-		tmp = main_reg;
-		md5_loop512(&words->uint32[i * 16], &tmp);
-		main_reg.a += tmp.a;
-		main_reg.b += tmp.b;
-		main_reg.c += tmp.c;
-		main_reg.d += tmp.d;
+		sha256_copy_reg(main_reg, tmp);
+
+		sha256_loop512(&words->uint32[i * 16], tmp);
+
+		j = -1;
+		while (++j < 8)
+			main_reg[j] += tmp[j];
 	}
 	free(words->uchar);
 	free(words);
