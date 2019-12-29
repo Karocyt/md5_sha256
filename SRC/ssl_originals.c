@@ -33,7 +33,7 @@ unsigned char	*md5_original(void *data, size_t len)
 	MD5_Update(&context, data, len);
 	MD5_Final(digest, &context);
 	i = -1;
-	ft_printf("original: \t");
+	ft_printf("openssl: \t");
 	while (++i < 16)
 		ft_printf("%02x", (unsigned int)digest[i]);
 	ft_printf("\n");
@@ -52,7 +52,7 @@ unsigned char	*sha256_original(void *data, size_t len)
 	SHA256_Update(&context, data, len);
 	SHA256_Final(digest, &context);
 	i = -1;
-	ft_printf("original: \t");
+	ft_printf("openssl: \t");
 	while (++i < SHA256_DIGEST_LENGTH)
 		ft_printf("%02x", (unsigned int)digest[i]);
 	ft_printf("\n");

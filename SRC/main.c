@@ -27,6 +27,8 @@ void *g_originals[NB_ALGOS] =
 
 static void	ssl_opts_print(char *output, t_params *params)
 {
+	if (params->c)
+		ft_putstr("ft_ssl:\t\t");
 	ft_putendl(output);
 	free(output);
 	(void)params;
