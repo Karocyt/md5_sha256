@@ -22,26 +22,22 @@
 **	https://www.tutorialspoint.com/cprogramming/c_bitwise_operators.htm
 */
 
-uint32_t	sha256_bsig0(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_bsig0(uint32_t x)
 {
-	return (
-
-		(b & c) ^ ((~b) & d));
+	return (rr(x, 2) ^ rr(x, 13) ^ rr(x, 22));
 }
 
-uint32_t	sha256_bsig1(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_bsig1(uint32_t x)
 {
-	return ((b & c) ^ (b & d) ^ (c & d));
+	return (rr(x, 6) ^ rr(x, 11) ^ rr(x, 25));
 }
 
-uint32_t	sha256_ssig0(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_ssig0(uint32_t x)
 {
-	return (
-
-		(b & c) ^ ((~b) & d));
+	return (rr(x, 7) ^ rr(x, 18) ^ (x >> 3));
 }
 
-uint32_t	sha256_ssig1(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_ssig1(uint32_t x)
 {
-	return ((b & c) ^ (b & d) ^ (c & d));
+	return (rr(x, 17) ^ rr(x, 19) ^ (x >> 10));
 }
