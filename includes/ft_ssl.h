@@ -88,4 +88,6 @@ uint32_t		sha256_bsig1(uint32_t b);
 uint32_t		sha256_ssig0(uint32_t b);
 uint32_t		sha256_ssig1(uint32_t b);
 
+char	*sha256_digest(uint32_t r[8]); // tmp
+
 #endif

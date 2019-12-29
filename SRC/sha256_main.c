@@ -37,7 +37,7 @@ size_t	sha256_pad(t_md5_words **words, size_t size)
 	new_size = size + 1 + 8;
 	while (new_size % 64)
 		new_size++;
-	if (new_size < size || !(tmp->uchar = ft_memalloc(new_size))) // MALLOC
+	if (new_size < size || !(tmp->uchar = ft_memalloc(new_size)))
 		return (0);
 	ft_memcpy(tmp->uchar, *words, size);
 	tmp->uchar[size] = (uint8_t)LEADING_ONE;
@@ -93,7 +93,7 @@ void	sha256_update_reg(uint32_t *src, uint32_t *dst)
 char	*ssl_sha256(unsigned char *input, size_t size)
 {
 	t_md5_words	*words;
-	uint32_t	tmp[8];
+	uint32_t	*tmp = malloc(4 * 8);//[8];
 	int			i;
 	uint32_t	main_reg[8];
 
@@ -104,6 +104,7 @@ char	*ssl_sha256(unsigned char *input, size_t size)
 	i = -1;
 	while (++i < (int)(size / 64))
 	{
+	ft_printf("%s\n", sha256_digest(main_reg));
 		sha256_copy_reg(main_reg, tmp);
 		sha256_loop512(&words->uint32[i * 16], tmp);
 		sha256_update_reg(tmp, main_reg);
