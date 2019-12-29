@@ -14,8 +14,8 @@
 #if defined(__APPLE__)
 # define COMMON_DIGEST_FOR_OPENSSL
 # include <CommonCrypto/CommonDigest.h>
-# define MD5state_st CC_MD5state_st
 # define MD5_ CC_MD5_
+# define SHA256_ CC_SHA256_
 #else
 # include <openssl/md5.h>
 #endif
@@ -24,7 +24,7 @@
 unsigned char	*md5_original(void *data, size_t len)
 {
 	unsigned char		*digest;
-	struct MD5state_st	context;
+	MD5_CTX				context;
 	int					i;
 
 	if (!(digest = malloc(16)))
@@ -33,7 +33,7 @@ unsigned char	*md5_original(void *data, size_t len)
 	MD5_Update(&context, data, len);
 	MD5_Final(digest, &context);
 	i = -1;
-	ft_printf("md5_original: \t");
+	ft_printf("original: \t");
 	while (++i < 16)
 		ft_printf("%02x", (unsigned int)digest[i]);
 	ft_printf("\n");
@@ -42,7 +42,19 @@ unsigned char	*md5_original(void *data, size_t len)
 
 unsigned char	*sha256_original(void *data, size_t len)
 {
-	(void)data;
-	(void)len;
-	return (NULL);
+	unsigned char		*digest;
+	SHA256_CTX			context;
+	int					i;
+
+	if (!(digest = malloc(SHA256_DIGEST_LENGTH)))
+		return (NULL);
+	SHA256_Init(&context);
+	SHA256_Update(&context, data, len);
+	SHA256_Final(digest, &context);
+	i = -1;
+	ft_printf("original: \t");
+	while (++i < SHA256_DIGEST_LENGTH)
+		ft_printf("%02x", (unsigned int)digest[i]);
+	ft_printf("\n");
+	return (digest);
 }
