@@ -105,7 +105,7 @@ char	*ssl_sha256(unsigned char *input, size_t size)
 	while (++i < (int)(size / 64))
 	{
 		sha256_copy_reg(main_reg, tmp);
-		sha256_loop512(&words->uint32[i * 16], tmp, i);
+		sha256_loop512(&words->uint32[i * 16], tmp);
 		sha256_update_reg(tmp, main_reg);
 	}
 	free(words->uchar);
