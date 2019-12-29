@@ -18,6 +18,7 @@
 # define SHA256_ CC_SHA256_
 #else
 # include <openssl/md5.h>
+# include <openssl/sha.h>
 #endif
 #include "libft.h"
 
