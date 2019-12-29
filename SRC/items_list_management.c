@@ -13,64 +13,64 @@
 
 #include "ft_ssl.h"
 
-static void ssl_append_item(t_item **lst, t_item *new)
+static void	ssl_append_item(t_item **lst, t_item *new)
 {
-    t_item *curr;
-    t_item **target;
+	t_item *curr;
+	t_item **target;
 
-    curr = *lst;
-    target = lst;
-    while (curr && (target = &curr->next))
-        curr = curr->next;
-    *target = new;
+	curr = *lst;
+	target = lst;
+	while (curr && (target = &curr->next))
+		curr = curr->next;
+	*target = new;
 }
 
-int        ssl_add_item_from_str(t_item **lst, char *str)
+int			ssl_add_item_from_str(t_item **lst, char *str)
 {
-    t_item *new;
-    size_t size;
+	t_item *new;
+	size_t size;
 
-    size = ft_strlen(str);
-    if (!(new = malloc(sizeof(t_item))))
-        return (1);
-    new->content = ft_strdup(str);
-    new->size = size;
-    new->next = NULL;
-    ssl_append_item(lst, new);
-    return (0);
+	size = ft_strlen(str);
+	if (!(new = malloc(sizeof(t_item))))
+		return (1);
+	new->content = ft_strdup(str);
+	new->size = size;
+	new->next = NULL;
+	ssl_append_item(lst, new);
+	return (0);
 }
 
-int        ssl_add_item_from_fd(t_item **lst, int fd)
+int			ssl_add_item_from_fd(t_item **lst, int fd)
 {
-    t_item *new;
-    unsigned char *content;
-    size_t size;
-    int64_t tmp;
+	t_item			*new;
+	unsigned char	*content;
+	size_t			size;
+	int64_t			tmp;
 
-    if ((tmp = (uint64_t)ft_get_fd_content(&content, fd)) < 0)
-        return (0);
-    size = (size_t)tmp;
-    if (!(new = malloc(sizeof(t_item))))
-        return (1);
-    new->content = content;
-    new->size = size;
-    new->next = NULL;
-    ssl_append_item(lst, new);
-    return (0);
+	if ((tmp = (uint64_t)ft_get_fd_content(&content, fd)) < 0)
+		return (0);
+	size = (size_t)tmp;
+	if (!(new = malloc(sizeof(t_item))))
+		return (1);
+	new->content = content;
+	new->size = size;
+	new->next = NULL;
+	ssl_append_item(lst, new);
+	return (0);
 }
 
-void    ssl_clear_items(t_item **lst)
+void		ssl_clear_items(t_item **lst)
 {
-    t_item *next;
-    t_item *curr;
+	t_item *next;
+	t_item *curr;
 
-    next = *lst;
-    while ((curr = next))
-    {
-        next = curr->next;
-        if (curr->content)
-            free(curr->content);
-        free(curr);
-    }
-    *lst = NULL;
+	next = *lst;
+	while ((curr = next))
+	{
+		next = curr->next;
+		if (curr->content)
+			free(curr->content);
+		free(curr);
+	}
+	*lst = NULL;
 }
