@@ -53,7 +53,7 @@ char	*sha256_digest(uint32_t r[8])
 	int			i;
 	uint8_t		*uchar;
 
-	if (!(res = ft_memalloc(65)))
+	if (!(res = malloc(65))) // still a mess
 		return (NULL);
 	i = -1;
 	uchar = (uint8_t *)r;
