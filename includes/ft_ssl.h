@@ -80,12 +80,12 @@ uint32_t		md5_i(uint32_t b, uint32_t c, uint32_t d);
 
 char			*ssl_sha256(unsigned char *input, size_t size);
 unsigned char	*sha256_original(void *data, size_t len);
-void			sha256_loop512(uint32_t *words, uint32_t r[8]);
+void			sha256_loop512(uint32_t *words, uint32_t r[8], int i);
 uint32_t		sha256_ch(uint32_t b, uint32_t c, uint32_t d);
 uint32_t		sha256_maj(uint32_t b, uint32_t c, uint32_t d);
-uint32_t		sha256_bsig0(uint32_t b, uint32_t c, uint32_t d);
-uint32_t		sha256_bsig1(uint32_t b, uint32_t c, uint32_t d);
-uint32_t		sha256_ssig0(uint32_t b, uint32_t c, uint32_t d);
-uint32_t		sha256_ssig1(uint32_t b, uint32_t c, uint32_t d);
+uint32_t		sha256_bsig0(uint32_t b);
+uint32_t		sha256_bsig1(uint32_t b);
+uint32_t		sha256_ssig0(uint32_t b);
+uint32_t		sha256_ssig1(uint32_t b);
 
 #endif

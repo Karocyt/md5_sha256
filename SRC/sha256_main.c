@@ -81,12 +81,20 @@ void	sha256_copy_reg(uint32_t *src, uint32_t *dst)
 		dst[i] = src[i];
 }
 
+void	sha256_update_reg(uint32_t *src, uint32_t *dst)
+{
+	int i;
+
+	i = -1;
+	while (++i < 8)
+		dst[i] += src[i];
+}
+
 char	*ssl_sha256(unsigned char *input, size_t size)
 {
 	t_md5_words	*words;
 	uint32_t	tmp[8];
 	int			i;
-	int			j;
 	uint32_t	main_reg[8];
 
 	words = (t_md5_words *)input;
@@ -97,12 +105,8 @@ char	*ssl_sha256(unsigned char *input, size_t size)
 	while (++i < (int)(size / 64))
 	{
 		sha256_copy_reg(main_reg, tmp);
-
-		sha256_loop512(&words->uint32[i * 16], tmp);
-
-		j = -1;
-		while (++j < 8)
-			main_reg[j] += tmp[j];
+		sha256_loop512(&words->uint32[i * 16], tmp, i);
+		sha256_update_reg(tmp, main_reg);
 	}
 	free(words->uchar);
 	free(words);

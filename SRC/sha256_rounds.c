@@ -30,8 +30,39 @@ const uint32_t g_const[64] = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
         					0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
         					0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
-void	sha256_loop512(uint32_t *words, uint32_t r[8])
+static uint32_t *sha256_compute_W(uint32_t *words, uint32_t *w)
 {
-	(void)words;
-	(void)r;
+        int i;
+
+        i = 0;
+        while (i < 16)
+        {
+                w[i] = words[i] * i; // For t = 0 to 15 { Wt = M(i)t }
+                i++;
+        }
+        while (i < 64)
+        {
+                w[i] = sha256_ssig1(w[i - 2]) + w[i - 7] + sha256_ssig0(i - 15) + w[i - 16];
+                i++;
+        }
+        return (w);
+}
+
+void	           sha256_loop512(uint32_t *words, uint32_t r[8], int i)
+{
+        uint32_t        t1;
+        uint32_t        t2;
+        uint32_t        w[64];
+
+        sha256_compute_W(words, w);
+        t1 = r[7] + sha256_bsig1(r[4]) + sha256_ch(r[4], r[5], r[6]) + g_const[i] + w[i];
+        t2 = sha256_bsig0(r[0]) + sha256_maj(r[0], r[1], r[2]);
+        r[7] = r[6];
+        r[6] = r[5];
+        r[5] = r[4];
+        r[4] = r[3] + t1;
+        r[3] = r[2];
+        r[2] = r[1];
+        r[1] = r[0];
+        r[0] = t1 + t2;
 }
