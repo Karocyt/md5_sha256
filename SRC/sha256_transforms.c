@@ -22,22 +22,22 @@
 **	https://www.tutorialspoint.com/cprogramming/c_bitwise_operators.htm
 */
 
-uint32_t	md5_f(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_f(uint32_t b, uint32_t c, uint32_t d)
 {
 	return ((b & c) | ((~b) & d));
 }
 
-uint32_t	md5_g(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_g(uint32_t b, uint32_t c, uint32_t d)
 {
 	return ((b & d) | (c & (~d)));
 }
 
-uint32_t	md5_h(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_h(uint32_t b, uint32_t c, uint32_t d)
 {
 	return (b ^ c ^ d);
 }
 
-uint32_t	md5_i(uint32_t b, uint32_t c, uint32_t d)
+uint32_t	sha256_i(uint32_t b, uint32_t c, uint32_t d)
 {
 	return (c ^ (b | (~d)));
 }

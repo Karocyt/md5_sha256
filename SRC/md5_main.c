@@ -23,7 +23,7 @@
 
 const t_reg g_init_reg = {0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476};
 
-size_t	md5_pad(t_md5_words **words, size_t size)
+static size_t	md5_pad(t_md5_words **words, size_t size)
 {
 	size_t			new_size;
 	t_md5_words		*tmp;
@@ -42,7 +42,7 @@ size_t	md5_pad(t_md5_words **words, size_t size)
 	return (new_size);
 }
 
-char	*md5_digest(t_reg r)
+static char		*md5_digest(t_reg r)
 {
 	char		*res;
 	const char	*base = "0123456789abcdef";
@@ -62,7 +62,7 @@ char	*md5_digest(t_reg r)
 	return (res);
 }
 
-char	*ssl_md5(unsigned char *input, size_t size)
+char			*ssl_md5(unsigned char *input, size_t size)
 {
 	t_md5_words	*words;
 	t_reg		tmp;

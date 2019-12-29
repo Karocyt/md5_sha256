@@ -21,7 +21,6 @@
 # define G md5_g
 # define H md5_h
 # define I md5_i
-# define LR md5_leftrotate
 
 typedef enum	e_hash_functions {
 	NB_ALGOS = 2,
@@ -69,6 +68,9 @@ void			ssl_clear_items(t_item **lst);
 int				ssl_add_item_from_str(t_item **lst, char *str);
 int				ssl_add_item_from_fd(t_item **lst, int fd);
 
+uint32_t		lr(uint32_t x, uint32_t c);
+uint32_t		rr(uint32_t x, uint32_t c);
+
 char			*ssl_md5(unsigned char *input, size_t size);
 unsigned char	*md5_original(void *data, size_t len);
 void			md5_loop512(uint32_t *words, t_reg *r);
@@ -76,7 +78,6 @@ uint32_t		md5_f(uint32_t b, uint32_t c, uint32_t d);
 uint32_t		md5_g(uint32_t b, uint32_t c, uint32_t d);
 uint32_t		md5_h(uint32_t b, uint32_t c, uint32_t d);
 uint32_t		md5_i(uint32_t b, uint32_t c, uint32_t d);
-uint32_t		md5_leftrotate(uint32_t x, uint32_t c);
 
 char			*ssl_sha256(unsigned char *input, size_t size);
 unsigned char	*sha256_original(void *data, size_t len);

@@ -35,6 +35,8 @@ SRC_NAME =	md5_main.c \
 			ssl_originals.c \
 			items_list_management.c \
 			sha256_main.c \
+			sha256_transforms.c \
+			utils.c \
 			main.c
 
 C_FILES = $(addprefix $(SRCDIR), $(SRC_NAME))
