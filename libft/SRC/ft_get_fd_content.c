@@ -17,7 +17,7 @@
 long int	ft_get_fd_content(unsigned char **res, int fd)
 {
 	long int		read_status;
-	long int 		total_size;
+	long int		total_size;
 	unsigned char	buff[BUFF_SIZE];
 
 	total_size = 0;

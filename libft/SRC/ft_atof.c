@@ -20,7 +20,7 @@ static double	ft_isinfinity(char *s)
 	if (!ft_strcmp(s, "NAN") || !ft_strcmp(s, "nan") || !ft_strcmp(s, "nAN") ||
 		!ft_strcmp(s, "NaN") || !ft_strcmp(s, "NAn") || !ft_strcmp(s, "Nan") ||
 		!ft_strcmp(s, "nAn") || !ft_strcmp(s, "naN"))
-		return (FT_NOT_A_NUMBER);
+		return ((1.0 / 0.0) - (1.0 / 0.0));
 	if (*s == '+' || *s == '-')
 	{
 		sign = (*s == '-') ? -1 : 1;
@@ -29,7 +29,7 @@ static double	ft_isinfinity(char *s)
 	if (!ft_strcmp(s, "INF") || !ft_strcmp(s, "iNF") || !ft_strcmp(s, "InF") ||
 		!ft_strcmp(s, "INf") || !ft_strcmp(s, "Inf") || !ft_strcmp(s, "iNf") ||
 		!ft_strcmp(s, "inF") || !ft_strcmp(s, "inf"))
-		return (sign * (FT_INFINITY));
+		return (sign * (1.0 / 0.0));
 	return (0);
 }
 

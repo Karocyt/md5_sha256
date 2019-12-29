@@ -19,8 +19,6 @@
 # define FT_FALSE				0
 # define FT_SUCCESS				1
 # define FT_FAILURE				0
-# define FT_INFINITY			1.0 / 0.0
-# define FT_NOT_A_NUMBER		FT_INFINITY - FT_INFINITY
 # define PF_FLAGS				"I'#0+- "
 # define PF_LMODIF				"hljz"
 # define PF_CONV				"dDioOuUxXcCsSp%B"
