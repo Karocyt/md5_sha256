@@ -53,7 +53,7 @@ char	*sha256_digest(uint32_t r[8])
 		return (NULL);
 	i = -1;
 	uchar = (uint8_t *)r;
-	while (++i < 2)//64)
+	while (++i < 8)
 	{
 		res[i * 8] = base[uchar[i * 4 + 3] / 16];
 		res[i * 8 + 1] = base[uchar[i * 4 + 3] % 16];
@@ -72,7 +72,7 @@ void	sha256_copy_reg(uint32_t *src, uint32_t *dst)
 {
 	int i;
 
-	i = 0;
+	i = -1;
 	while (++i < 8)
 		dst[i] = src[i];
 }
