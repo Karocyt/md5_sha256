@@ -58,7 +58,6 @@ typedef struct	s_reg {
 }				t_reg;
 
 const uint32_t	g_add[64];
-const uint32_t	g_shift[64];
 
 void			*g_funcs[NB_ALGOS];
 void			*g_originals[NB_ALGOS];
