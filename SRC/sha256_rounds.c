@@ -37,7 +37,7 @@ static uint32_t *sha256_compute_W(uint32_t *words, uint32_t *w)
 	i = 0;
 	while (i < 16)
 	{
-		w[i] = words[i] * i; // For t = 0 to 15 { Wt = M(i)t }
+		w[i] = words[i];
 		i++;
 	}
 	while (i < 64)
