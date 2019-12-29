@@ -36,7 +36,7 @@ size_t	md5_pad(t_md5_words **words, size_t size)
 	if (new_size < size || !(tmp->uchar = ft_memalloc(new_size)))
 		return (0);
 	ft_memcpy(tmp->uchar, *words, size);
-	tmp->uchar[size] = LEADING_ONE;
+	tmp->uchar[size] = (uint8_t)LEADING_ONE;
 	tmp->uint64[new_size / 8 - 1] = size * 8;
 	*words = tmp;
 	return (new_size);
