@@ -63,11 +63,10 @@ void	           sha256_loop512(uint32_t *words, uint32_t r[8])
 		t2 = sha256_bsig0(r[0]) + sha256_maj(r[0], r[1], r[2]);
 		if (!i)
 		{
-			ft_printf("t1:%x = bsig1:%x (r[4]:%x => %x, %x, %x => %x) %s\n", t1,
-																		sha256_bsig1(r[4]),
-																		r[4],
-																		(rr(r[4], 6) ^ rr(r[4], 11) ^ rr(r[4], 25)),
-																		"END");
+			ft_printf("t1:%x", t1);
+			ft_printf(" = bsig1:%x", sha256_bsig1(r[4]));
+			ft_printf(" (r[4]:%x", r[4]);
+			ft_printf(") => %x)\n", (rr(r[4], 6) ^ rr(r[4], 11) ^ rr(r[4], 25)));
 			
 		}
 		r[7] = r[6];
