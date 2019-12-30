@@ -27,6 +27,11 @@ const uint32_t g_sha256_init_reg[8] = {0x6a09e667, 0xbb67ae85, 0x3c6ef372,
 										0xa54ff53a, 0x510e527f, 0x9b05688c,
 										0x1f83d9ab, 0x5be0cd19};
 
+// Big-endian version:
+// const uint32_t g_sha256_init_reg[8] = {0x67e6096a, 0x85ae67bb, 0x72f36e3c,
+// 										0x3af54fa5, 0x7f520e51, 0x8c68059b,
+// 										0xabd9831f, 0x19cde05b};
+
 size_t	sha256_pad(t_md5_words **words, size_t size)
 {
 	size_t			new_size;
@@ -97,6 +102,7 @@ char	*ssl_sha256(unsigned char *input, size_t size)
 	int			i;
 	uint32_t	main_reg[8];
 
+	// rotations needs to be big-endian
 	words = (t_md5_words *)input;
 	if ((i = -1) && !(size = sha256_pad(&words, size)))
 		return (NULL);
