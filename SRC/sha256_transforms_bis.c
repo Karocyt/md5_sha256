@@ -29,7 +29,6 @@ uint32_t	sha256_bsig0(uint32_t x)
 
 uint32_t	sha256_bsig1(uint32_t x)
 {
-	//ft_printf("bsig1: %08x\n", x);
 	return (rr(x, 6) ^ rr(x, 11) ^ rr(x, 25));
 }
 

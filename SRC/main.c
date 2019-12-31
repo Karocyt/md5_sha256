@@ -25,10 +25,14 @@ void *g_originals[NB_ALGOS] =
 	&sha256_original
 };
 
-static void	ssl_opts_print(char *output, t_params *params)
+static void	ssl_opts_print(char *output, t_params *params, char *name)
 {
 	if (params->c)
 		ft_putstr("ft_ssl:\t\t");
+	if (!params->q)
+		ft_printf("%s (%s) = ", ft_strtoupper(params->algo), name);
+	if (params->r)
+		ft_strrev(output);
 	ft_putendl(output);
 	free(output);
 	(void)params;
@@ -61,7 +65,7 @@ static int	ssl_process(t_params *params)
 			free(digest);
 		}
 		mine = g_funcs[params->h];
-		ssl_opts_print(mine(item->content, item->size), params);
+		ssl_opts_print(mine(item->content, item->size), params, item->name);
 		item = item->next;
 	}
 	return (0);

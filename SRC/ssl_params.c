@@ -45,7 +45,7 @@ static int		ssl_add_file(char *filename, t_params *params)
 
 	if ((fd = open(filename, O_RDONLY)) < 0)
 		return (0);
-	ssl_add_item_from_fd(&params->items, fd);
+	ssl_add_item_from_fd(&params->items, fd, filename);
 	return (1);
 }
 
@@ -57,6 +57,7 @@ static int		ssl_set_algo(char *str, t_params *params)
 		params->h = SHA256;
 	else
 		return (0);
+	params->algo = str;
 	return (1);
 }
 
@@ -82,6 +83,6 @@ int				ssl_read_params(int ac, char **av, t_params *params)
 	if (i != ac)
 		return (1);
 	if (!params->items)
-		ssl_add_item_from_fd(&params->items, 0);
+		ssl_add_item_from_fd(&params->items, 0, "STDIN");
 	return (0);
 }

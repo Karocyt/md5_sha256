@@ -31,6 +31,7 @@ typedef enum	e_hash_functions {
 typedef struct	s_item {
 	void			*content;
 	size_t			size;
+	char 			*name;
 	struct s_item	*next;
 }				t_item;
 
@@ -42,6 +43,7 @@ typedef struct	s_ssl {
 	uint8_t			c:1;
 	t_hash			h;
 	t_item			*items;
+	char			*algo;
 }				t_params;
 
 typedef union	u_md5_words {
@@ -65,7 +67,7 @@ void			*g_originals[NB_ALGOS];
 int				ssl_read_params(int ac, char **av, t_params *params);
 void			ssl_clear_items(t_item **lst);
 int				ssl_add_item_from_str(t_item **lst, char *str);
-int				ssl_add_item_from_fd(t_item **lst, int fd);
+int				ssl_add_item_from_fd(t_item **lst, int fd, char *filename);
 
 uint32_t		lr(uint32_t x, uint32_t c);
 uint32_t		rr(uint32_t x, uint32_t c);
@@ -88,8 +90,7 @@ uint32_t		sha256_bsig1(uint32_t b);
 uint32_t		sha256_ssig0(uint32_t b);
 uint32_t		sha256_ssig1(uint32_t b);
 
-uint32_t    swap_endianess(uint32_t x);
-uint64_t    swap_endianess64(uint64_t x);
-char	*sha256_digest(uint32_t r[8]); // tmp
+uint32_t    	swap_endianess(uint32_t x);
+uint64_t    	swap_endianess64(uint64_t x);
 
 #endif

@@ -49,7 +49,7 @@ char	*sha256_digest(uint32_t r[8])
 	int			i;
 	uint8_t		*uchar;
 
-	if (!(res = malloc(65))) // still a mess
+	if (!(res = malloc(65)))
 		return (NULL);
 	i = -1;
 	uchar = (uint8_t *)r;
@@ -64,14 +64,6 @@ char	*sha256_digest(uint32_t r[8])
 		res[i * 8 + 6] = base[uchar[i * 4] / 16];
 		res[i * 8 + 7] = base[uchar[i * 4] % 16];
 	}
-	// Commented as strictly equivalent to base print
-	// int j = -1;
-	// char *str = (char *)r;
-	// ft_printf("revprintf:\t");
-	// while (++j < 8)
-	// 	ft_printf("%02hhx%02hhx%02hhx%02hhx", str[4 * j + 3], str[4 * j + 2], str[4 * j + 1], str[4 * j]);
-	// ft_printf("\n");
-
 	res[64] = 0;
 	return (res);
 }
@@ -97,11 +89,10 @@ static void	sha256_update_reg(uint32_t *src, uint32_t *dst)
 char	*ssl_sha256(unsigned char *input, size_t size)
 {
 	t_md5_words	*words;
-	uint32_t	tmp[8];// = malloc(4 * 8);//[8];
+	uint32_t	tmp[8];
 	int			i;
 	uint32_t	main_reg[8];
 
-	// rotations needs to be big-endian, then check constants endianess
 	words = (t_md5_words *)input;
 	if ((i = -1) && !(size = sha256_pad(&words, size)))
 		return (NULL);
@@ -109,7 +100,6 @@ char	*ssl_sha256(unsigned char *input, size_t size)
 	i = -1;
 	while (++i < (int)(size / 64))
 	{
-	//ft_printf("%s\n", sha256_digest(main_reg));
 		sha256_copy_reg(main_reg, tmp);
 		sha256_loop512(&words->uint32[i * 16], tmp);
 		sha256_update_reg(tmp, main_reg);

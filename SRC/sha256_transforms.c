@@ -39,15 +39,11 @@ uint32_t    swap_endianess(uint32_t x)
     uint8_t     *stry;
     int         i;
 
-
-    //ft_printf("before:\t%x\n", x);
     strx = (uint8_t *)&x;
     stry = (uint8_t *)&y;
     i = -1;
     while (++i < 4)
         stry[i] = strx[3 - i];
-    
-    //ft_printf("after: \t%x\n", y);
     return (y);
 }
 
@@ -58,22 +54,15 @@ uint64_t    swap_endianess64(uint64_t x)
     uint8_t     *stry;
     int         i;
 
-    //ft_printf("size: %016llx\n", x);
     strx = (uint8_t *)&x;
     stry = (uint8_t *)&y;
     i = -1;
     while (++i < 8)
         stry[i] = strx[7 - i];
-
-    //ft_printf("size: %016llx\n", y);
     return (y);
 }
 
 uint32_t    rr(uint32_t x, uint32_t c)
 {
-    //uint32_t swap;
-    //x = swap_endianess(x);
-    //swap = swap_endianess((x >> c) | (x << (32 - c)));
-    //return (swap);
     return (((x >> c) | (x << (32 - c))));
 }
