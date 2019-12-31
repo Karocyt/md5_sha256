@@ -42,7 +42,7 @@ static uint32_t *sha256_compute_W(uint32_t *words, uint32_t *w)
 	}
 	while (i < 64)
 	{
-		w[i] = sha256_ssig1(w[i - 2]) + w[i - 7] + sha256_ssig0(i - 15) + w[i - 16];
+		w[i] = sha256_ssig1(w[i - 2]) + w[i - 7] + sha256_ssig0(w[i - 15]) + w[i - 16];
 		i++;
 	}
 	return (w);
