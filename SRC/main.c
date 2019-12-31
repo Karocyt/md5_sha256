@@ -61,6 +61,13 @@ static int	ssl_process(t_params *params)
 			free(digest);
 		}
 		mine = g_funcs[params->h];
+		
+		ft_printf("noswapw:\t%s\n", ssl_sha256_noswapwords(item->content, item->size));
+		
+		ft_printf("biginit:\t%s\n", ssl_sha256_biginit(item->content, item->size));
+		ft_printf("biginitswapw:\t%s\n", ssl_sha256_biginit_swapwords(item->content, item->size));
+		ft_printf("bigconst:\t%s\n", ssl_sha256_bigconst(item->content, item->size));
+		ft_printf("bigconstswapw:\t%s\n", ssl_sha256_bigconst_swapwords(item->content, item->size));
 		ssl_opts_print(mine(item->content, item->size), params);
 		item = item->next;
 	}

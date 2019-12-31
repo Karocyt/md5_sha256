@@ -88,6 +88,17 @@ uint32_t		sha256_bsig1(uint32_t b);
 uint32_t		sha256_ssig0(uint32_t b);
 uint32_t		sha256_ssig1(uint32_t b);
 
+uint32_t    swap_endianess(uint32_t x);
+uint64_t    swap_endianess64(uint64_t x);
 char	*sha256_digest(uint32_t r[8]); // tmp
+char    *ssl_sha256_noswapwords(unsigned char *input, size_t size);
+char    *ssl_sha256_biginit(unsigned char *input, size_t size);
+char    *ssl_sha256_biginit_swapwords(unsigned char *input, size_t size);
+char    *ssl_sha256_bigconst(unsigned char *input, size_t size);
+char    *ssl_sha256_bigconst_swapwords(unsigned char *input, size_t size);
+
+void               sha256_loop512_bigconst(uint32_t *words, uint32_t r[8]);
+void               sha256_loop512_noswapwords(uint32_t *words, uint32_t r[8]);
+void               sha256_loop512_bigconst_swapwords(uint32_t *words, uint32_t r[8]);
 
 #endif

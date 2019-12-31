@@ -35,9 +35,17 @@ SRC_NAME =	md5_main.c \
 			ssl_originals.c \
 			items_list_management.c \
 			sha256_main.c \
+			sha256_main_noswapwords.c \
+			sha256_main_biginit.c \
+			sha256_main_biginit_swapwords.c \
+			sha256_main_bigconst.c \
+			sha256_main_bigconst_swapwords.c \
 			sha256_transforms.c \
 			sha256_transforms_bis.c \
 			sha256_rounds.c \
+			sha256_rounds_noswapwords.c \
+			sha256_rounds_bigconst.c \
+			sha256_rounds_bigconst_swapwords.c \
 			main.c
 
 C_FILES = $(addprefix $(SRCDIR), $(SRC_NAME))

@@ -42,8 +42,3 @@ uint32_t	sha256_ssig1(uint32_t x)
 {
 	return (rr(x, 17) ^ rr(x, 19) ^ (x >> 10));
 }
-
-uint32_t    rr(uint32_t x, uint32_t c)
-{
-    return ((x >> c) | (x << (32 - c)));
-}
