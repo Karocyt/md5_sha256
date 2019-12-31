@@ -64,7 +64,6 @@ char	*sha256_digest(uint32_t r[8])
 		res[i * 8 + 6] = base[uchar[i * 4] / 16];
 		res[i * 8 + 7] = base[uchar[i * 4] % 16];
 	}
-	ft_printf("printf:\t\t%08x%08x%08x%08x%08x%08x%08x%08x\n", swap_endianess(r[0]), swap_endianess(r[1]), swap_endianess(r[2]), swap_endianess(r[3]), swap_endianess(r[4]), swap_endianess(r[5]), swap_endianess(r[6]), swap_endianess(r[7]));
 	// Commented as strictly equivalent to base print
 	// int j = -1;
 	// char *str = (char *)r;
