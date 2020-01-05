@@ -42,7 +42,7 @@ uint32_t	md5_i(uint32_t b, uint32_t c, uint32_t d)
 	return (c ^ (b | (~d)));
 }
 
-uint32_t    lr(uint32_t x, uint32_t c)
+uint32_t	lr(uint32_t x, uint32_t c)
 {
-    return ((x << c) | (x >> (32 - c)));
+	return ((x << c) | (x >> (32 - c)));
 }

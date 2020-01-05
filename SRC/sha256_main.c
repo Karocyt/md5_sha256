@@ -19,9 +19,10 @@
 **	https://en.wikipedia.org/wiki/SHA-2
 */
 
-static const uint32_t g_sha256_init_reg[8] = {0x6a09e667, 0xbb67ae85, 0x3c6ef372,
- 										0xa54ff53a, 0x510e527f, 0x9b05688c,
- 										0x1f83d9ab, 0x5be0cd19};
+static const uint32_t g_sha256_init_reg[8] =
+{	0x6a09e667, 0xbb67ae85, 0x3c6ef372,
+	0xa54ff53a, 0x510e527f, 0x9b05688c,
+	0x1f83d9ab, 0x5be0cd19};
 
 static size_t	sha256_pad(t_md5_words **words, size_t size)
 {
@@ -42,7 +43,7 @@ static size_t	sha256_pad(t_md5_words **words, size_t size)
 	return (new_size);
 }
 
-char	*sha256_digest(uint32_t r[8])
+char			*sha256_digest(uint32_t r[8])
 {
 	char		*res;
 	const char	*base = "0123456789abcdef";
@@ -68,7 +69,7 @@ char	*sha256_digest(uint32_t r[8])
 	return (res);
 }
 
-static void	sha256_copy_reg(uint32_t *src, uint32_t *dst)
+static void		sha256_copy_reg(uint32_t *src, uint32_t *dst)
 {
 	int i;
 
@@ -77,7 +78,7 @@ static void	sha256_copy_reg(uint32_t *src, uint32_t *dst)
 		dst[i] = src[i];
 }
 
-static void	sha256_update_reg(uint32_t *src, uint32_t *dst)
+static void		sha256_update_reg(uint32_t *src, uint32_t *dst)
 {
 	int i;
 
@@ -86,7 +87,7 @@ static void	sha256_update_reg(uint32_t *src, uint32_t *dst)
 		dst[i] += src[i];
 }
 
-char	*ssl_sha256(unsigned char *input, size_t size)
+char			*ssl_sha256(unsigned char *input, size_t size)
 {
 	t_md5_words	*words;
 	uint32_t	tmp[8];
@@ -94,7 +95,8 @@ char	*ssl_sha256(unsigned char *input, size_t size)
 	uint32_t	main_reg[8];
 
 	words = (t_md5_words *)input;
-	if ((i = -1) && !(size = sha256_pad(&words, size)))
+	i = -1;
+	if (!(size = sha256_pad(&words, size)))
 		return (NULL);
 	sha256_copy_reg((uint32_t *)g_sha256_init_reg, main_reg);
 	i = -1;

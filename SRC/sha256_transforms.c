@@ -32,37 +32,37 @@ uint32_t	sha256_maj(uint32_t b, uint32_t c, uint32_t d)
 	return ((b & c) ^ (b & d) ^ (c & d));
 }
 
-uint32_t    swap_endianess(uint32_t x)
+uint32_t	swap_endianess(uint32_t x)
 {
-    uint32_t    y;
-    uint8_t     *strx;
-    uint8_t     *stry;
-    int         i;
+	uint32_t	y;
+	uint8_t		*strx;
+	uint8_t		*stry;
+	int			i;
 
-    strx = (uint8_t *)&x;
-    stry = (uint8_t *)&y;
-    i = -1;
-    while (++i < 4)
-        stry[i] = strx[3 - i];
-    return (y);
+	strx = (uint8_t *)&x;
+	stry = (uint8_t *)&y;
+	i = -1;
+	while (++i < 4)
+		stry[i] = strx[3 - i];
+	return (y);
 }
 
-uint64_t    swap_endianess64(uint64_t x)
+uint64_t	swap_endianess64(uint64_t x)
 {
-    uint64_t    y;
-    uint8_t     *strx;
-    uint8_t     *stry;
-    int         i;
+	uint64_t	y;
+	uint8_t		*strx;
+	uint8_t		*stry;
+	int			i;
 
-    strx = (uint8_t *)&x;
-    stry = (uint8_t *)&y;
-    i = -1;
-    while (++i < 8)
-        stry[i] = strx[7 - i];
-    return (y);
+	strx = (uint8_t *)&x;
+	stry = (uint8_t *)&y;
+	i = -1;
+	while (++i < 8)
+		stry[i] = strx[7 - i];
+	return (y);
 }
 
-uint32_t    rr(uint32_t x, uint32_t c)
+uint32_t	rr(uint32_t x, uint32_t c)
 {
-    return (((x >> c) | (x << (32 - c))));
+	return (((x >> c) | (x << (32 - c))));
 }

@@ -31,7 +31,7 @@ typedef enum	e_hash_functions {
 typedef struct	s_item {
 	void			*content;
 	size_t			size;
-	char 			*name;
+	char			*name;
 	struct s_item	*next;
 }				t_item;
 
@@ -90,7 +90,7 @@ uint32_t		sha256_bsig1(uint32_t b);
 uint32_t		sha256_ssig0(uint32_t b);
 uint32_t		sha256_ssig1(uint32_t b);
 
-uint32_t    	swap_endianess(uint32_t x);
-uint64_t    	swap_endianess64(uint64_t x);
+uint32_t		swap_endianess(uint32_t x);
+uint64_t		swap_endianess64(uint64_t x);
 
 #endif
