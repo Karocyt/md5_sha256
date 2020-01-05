@@ -65,6 +65,20 @@ int			ssl_add_item_from_fd(t_item **lst, int fd, char *filename)
 	return (0);
 }
 
+int			ssl_add_stdin(t_item **lst, size_t size, char *content)
+{
+	t_item			*new;
+
+	if (!(new = malloc(sizeof(t_item))))
+		return (1);
+	new->content = content;
+	new->size = size;
+	new->name = ft_strdup("STDIN");
+	new->next = NULL;
+	ssl_append_item(lst, new);
+	return (0);
+}
+
 void		ssl_clear_items(t_item **lst)
 {
 	t_item *next;

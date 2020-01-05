@@ -43,6 +43,8 @@ static int	ssl_clean(t_params *params, int i)
 	if (params)
 	{
 		ssl_clear_items(&params->items);
+		if (params->stdin_free)
+			free(params->stdin);
 		free(params);
 	}
 	return (i);
@@ -56,6 +58,8 @@ static int	ssl_process(t_params *params)
 	void	*digest;
 
 	item = params->items;
+	if (params->p)
+		write(1, params->stdin, params->stdin_size);
 	while (item)
 	{
 		if (params->c)

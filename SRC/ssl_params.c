@@ -61,12 +61,22 @@ static int		ssl_set_algo(char *str, t_params *params)
 	return (1);
 }
 
+static int		ssl_read_stdin(t_params *params)
+{
+	int tmp;
+
+	if ((tmp = (uint64_t)ft_get_fd_content((uint8_t **)&params->stdin, 0)) < 0)
+		return (0);
+	params->stdin_size = (size_t)tmp;
+	params->stdin_free = 1;
+	return (tmp);
+}
+
 int				ssl_read_params(int ac, char **av, t_params *params)
 {
 	int i;
 
-	i = 2;
-	if (!ssl_set_algo(av[1], params))
+	if ((i = 2) && !ssl_set_algo(av[1], params))
 		return (1);
 	while (i < ac && ssl_read_opts(av[i], params))
 		i++;
@@ -82,7 +92,11 @@ int				ssl_read_params(int ac, char **av, t_params *params)
 			return (1);
 	if (i != ac)
 		return (1);
-	if (!params->items)
-		ssl_add_item_from_fd(&params->items, 0, "STDIN");
+	if (!params->items || params->p)
+	{
+		ssl_add_stdin(&params->items, params->stdin_size, params->stdin);
+		if (ssl_read_stdin(params) < 0)
+			return (1);
+	}
 	return (0);
 }

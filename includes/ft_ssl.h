@@ -41,9 +41,12 @@ typedef struct	s_ssl {
 	uint8_t			r:1;
 	uint8_t			s:1;
 	uint8_t			c:1;
+	uint8_t			stdin_free;
 	t_hash			h;
 	t_item			*items;
 	char			*algo;
+	char			*stdin;
+	size_t			stdin_size;
 }				t_params;
 
 typedef union	u_md5_words {
@@ -68,6 +71,7 @@ int				ssl_read_params(int ac, char **av, t_params *params);
 void			ssl_clear_items(t_item **lst);
 int				ssl_add_item_from_str(t_item **lst, char *str);
 int				ssl_add_item_from_fd(t_item **lst, int fd, char *filename);
+int				ssl_add_stdin(t_item **lst, size_t size, char *content);
 
 uint32_t		lr(uint32_t x, uint32_t c);
 uint32_t		rr(uint32_t x, uint32_t c);
