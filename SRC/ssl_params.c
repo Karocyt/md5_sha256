@@ -68,35 +68,36 @@ static int		ssl_read_stdin(t_params *params)
 	if ((tmp = (uint64_t)ft_get_fd_content((uint8_t **)&params->stdin, 0)) < 0)
 		return (0);
 	params->stdin_size = (size_t)tmp;
-	params->stdin_free = 1;
+	if (params->items)
+		params->stdin_free = 1;
 	return (tmp);
 }
 
-int				ssl_read_params(int ac, char **av, t_params *params)
+int				ssl_read_params(int ac, char **av, t_params *p)
 {
 	int i;
 
-	if ((i = 2) && !ssl_set_algo(av[1], params))
+	if ((i = 2) && !ssl_set_algo(av[1], p))
 		return (1);
-	while (i < ac && ssl_read_opts(av[i], params))
+	while (i < ac && ssl_read_opts(av[i], p))
 		i++;
-	if (params->s)
+	if (p->s)
 	{
 		if (i == ac)
 			return (1);
-		params->s = 0;
-		ssl_add_item_from_str(&params->items, av[i++]);
+		p->s = 0;
+		ssl_add_item_from_str(&p->items, av[i++]);
 	}
 	while (i < ac)
-		if (!ssl_add_file(av[i++], params))
+		if (!ssl_add_file(av[i++], p))
 			return (1);
 	if (i != ac)
 		return (1);
-	if (!params->items || params->p)
-	{
-		ssl_add_stdin(&params->items, params->stdin_size, params->stdin);
-		if (ssl_read_stdin(params) < 0)
+	if (!p->items || p->p)
+		if (ssl_read_stdin(p) < 0)
 			return (1);
-	}
+	if (!p->items)
+		if (ssl_add_stdin(&p->items, p->stdin_size, p->stdin) < 0)
+			return (1);
 	return (0);
 }
