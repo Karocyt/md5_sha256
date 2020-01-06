@@ -16,13 +16,22 @@
 void *g_funcs[NB_ALGOS] =
 {
 	&ssl_md5,
-	&ssl_sha256
+	&ssl_sha256,
+	&ssl_sha224
 };
 
 void *g_originals[NB_ALGOS] =
 {
 	&md5_original,
-	&sha256_original
+	&sha256_original,
+	&sha224_original
+};
+
+void *g_strs[NB_ALGOS] =
+{
+	"md5",
+	"sha256",
+	"sha224"
 };
 
 static void	ssl_opts_print(char *output, t_params *params, char *name)

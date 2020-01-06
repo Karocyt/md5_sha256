@@ -16,6 +16,7 @@
 # include <CommonCrypto/CommonDigest.h>
 # define MD5_ CC_MD5_
 # define SHA256_ CC_SHA256_
+# define SHA224_ CC_SHA224_
 #else
 # include <openssl/md5.h>
 # include <openssl/sha.h>
@@ -55,6 +56,25 @@ unsigned char	*sha256_original(void *data, size_t len)
 	i = -1;
 	ft_printf("openssl: \t");
 	while (++i < SHA256_DIGEST_LENGTH)
+		ft_printf("%02x", (unsigned int)digest[i]);
+	ft_printf("\n");
+	return (digest);
+}
+
+unsigned char	*sha224_original(void *data, size_t len)
+{
+	unsigned char		*digest;
+	SHA256_CTX			context;
+	int					i;
+
+	if (!(digest = malloc(SHA224_DIGEST_LENGTH)))
+		return (NULL);
+	SHA224_Init(&context);
+	SHA224_Update(&context, data, len);
+	SHA224_Final(digest, &context);
+	i = -1;
+	ft_printf("openssl: \t");
+	while (++i < SHA224_DIGEST_LENGTH)
 		ft_printf("%02x", (unsigned int)digest[i]);
 	ft_printf("\n");
 	return (digest);

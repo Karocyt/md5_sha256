@@ -55,11 +55,17 @@ static int		ssl_add_file(char *filename, t_params *params)
 
 static int		ssl_set_algo(char *str, t_params *params)
 {
-	if (!ft_strcmp(str, "md5"))
-		params->h = MD5;
-	else if (!ft_strcmp(str, "sha256"))
-		params->h = SHA256;
-	else
+	int i;
+	int ok;
+
+	i = -1;
+	while (++i < NB_ALGOS && !ok)
+		if (!ft_strcmp(str, g_strs[i]))
+		{
+			params->h = i;
+			ok = 1;
+		}
+	if (!ok)
 		return (0);
 	params->algo = str;
 	return (1);

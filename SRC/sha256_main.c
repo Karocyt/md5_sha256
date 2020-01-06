@@ -24,7 +24,7 @@ static const uint32_t g_sha256_init_reg[8] =
 	0xa54ff53a, 0x510e527f, 0x9b05688c,
 	0x1f83d9ab, 0x5be0cd19};
 
-static size_t	sha256_pad(t_md5_words **words, size_t size)
+size_t			sha256_pad(t_md5_words **words, size_t size)
 {
 	size_t			new_size;
 	t_md5_words		*tmp;
@@ -69,7 +69,7 @@ char			*sha256_digest(uint32_t r[8])
 	return (res);
 }
 
-static void		sha256_copy_reg(uint32_t *src, uint32_t *dst)
+void			sha256_copy_reg(uint32_t *src, uint32_t *dst)
 {
 	int i;
 
@@ -78,7 +78,7 @@ static void		sha256_copy_reg(uint32_t *src, uint32_t *dst)
 		dst[i] = src[i];
 }
 
-static void		sha256_update_reg(uint32_t *src, uint32_t *dst)
+void			sha256_update_reg(uint32_t *src, uint32_t *dst)
 {
 	int i;
 

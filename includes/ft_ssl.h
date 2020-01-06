@@ -22,11 +22,7 @@
 # define H md5_h
 # define I md5_i
 
-typedef enum	e_hash_functions {
-	NB_ALGOS = 2,
-	MD5 = 0,
-	SHA256
-}				t_hash;
+# define NB_ALGOS 3
 
 typedef struct	s_item {
 	void			*content;
@@ -41,8 +37,8 @@ typedef struct	s_ssl {
 	uint8_t			r:1;
 	uint8_t			s:1;
 	uint8_t			c:1;
-	uint8_t			stdin_free;
-	t_hash			h;
+	uint8_t			stdin_free:1;
+	uint8_t			h;
 	t_item			*items;
 	char			*algo;
 	char			*stdin;
@@ -66,6 +62,7 @@ const uint32_t	g_add[64];
 
 void			*g_funcs[NB_ALGOS];
 void			*g_originals[NB_ALGOS];
+void 			*g_strs[NB_ALGOS];
 
 int				ssl_read_params(int ac, char **av, t_params *params);
 void			ssl_clear_items(t_item **lst);
@@ -93,6 +90,12 @@ uint32_t		sha256_bsig0(uint32_t b);
 uint32_t		sha256_bsig1(uint32_t b);
 uint32_t		sha256_ssig0(uint32_t b);
 uint32_t		sha256_ssig1(uint32_t b);
+size_t			sha256_pad(t_md5_words **words, size_t size);
+void			sha256_copy_reg(uint32_t *src, uint32_t *dst);
+void			sha256_update_reg(uint32_t *src, uint32_t *dst);
+
+char			*ssl_sha224(unsigned char *input, size_t size);
+unsigned char	*sha224_original(void *data, size_t len);
 
 uint32_t		swap_endianess(uint32_t x);
 uint64_t		swap_endianess64(uint64_t x);
