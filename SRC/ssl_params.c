@@ -23,7 +23,7 @@ static int		ssl_read_opts(char *str, t_params *params)
 		return (0);
 	while (str[++i])
 		if (!ft_strchr("pqrsc", str[i]))
-			return 0;
+			return (0);
 	i = 0;
 	while (str[++i])
 	{

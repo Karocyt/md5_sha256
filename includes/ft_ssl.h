@@ -62,7 +62,7 @@ const uint32_t	g_add[64];
 
 void			*g_funcs[NB_ALGOS];
 void			*g_originals[NB_ALGOS];
-void 			*g_strs[NB_ALGOS];
+void			*g_strs[NB_ALGOS];
 
 int				ssl_read_params(int ac, char **av, t_params *params);
 void			ssl_clear_items(t_item **lst);
